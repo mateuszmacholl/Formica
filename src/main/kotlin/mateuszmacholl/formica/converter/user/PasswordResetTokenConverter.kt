@@ -12,7 +12,7 @@ class PasswordResetTokenConverter {
     lateinit var userService: UserService
 
     fun toEntity(createPasswordResetTokenDto: CreatePasswordResetTokenDto): PasswordResetToken {
-        val user = userService.findById(createPasswordResetTokenDto.user)
+        val user = userService.findById(createPasswordResetTokenDto.user!!)
         if (!user.isPresent) {
             throw IllegalArgumentException()
         }

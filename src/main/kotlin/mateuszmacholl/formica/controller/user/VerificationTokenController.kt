@@ -1,9 +1,9 @@
 package mateuszmacholl.formica.controller.user
 
 import mateuszmacholl.formica.converter.user.VerificationTokenConverter
+import mateuszmacholl.formica.dto.user.verificationToken.CreateVerificationTokenDto
 import mateuszmacholl.formica.service.user.token.VerificationTokenService
 import mateuszmacholl.formica.specification.VerificationTokenSpec
-import mateuszmacholl.formica.dto.user.verificationToken.CreateVerificationTokenDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus

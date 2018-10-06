@@ -12,8 +12,8 @@ import java.util.*
 class UserService @Autowired
 constructor(private val userRepo: UserRepo, private val passwordEncoderService: PasswordEncoderService) {
 
-    fun findById(id: Int?): Optional<User> {
-        return userRepo.findById(id!!)
+    fun findById(id: Int): Optional<User> {
+        return userRepo.findById(id)
     }
 
     fun findAll(userSpec: UserSpec, pageable: Pageable): MutableIterable<User> {

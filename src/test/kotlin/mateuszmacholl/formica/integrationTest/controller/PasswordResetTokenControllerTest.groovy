@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.integrationTest.controller
 
-import mateuszmacholl.formica.model.user.VerificationToken
-import mateuszmacholl.formica.service.user.token.VerificationTokenService
+import mateuszmacholl.formica.model.user.PasswordResetToken
+import mateuszmacholl.formica.service.user.token.PasswordResetTokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -17,44 +17,44 @@ import spock.lang.Specification
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.ANY)
 @ActiveProfiles(value = ["test"])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CorrectVerificationTokenControllerTest extends Specification {
+class PasswordResetTokenControllerTest extends Specification {
     @Autowired
-    VerificationTokenService verificationTokenService
+    PasswordResetTokenService passwordResetTokenService
     @Autowired
     private TestRestTemplate restTemplate
 
-    def "get all verification tokens"() {
+    def "get all password reset tokens"() {
         when:
-        def response = restTemplate.getForEntity('/verification-tokens', String.class)
+        def response = restTemplate.getForEntity('/password-reset-tokens', String.class)
 
         then:
         HttpStatus.OK == response.statusCode
     }
 
-    def "get verification token by id"() {
+    def "get password reset token by id"() {
         given:
-        def id = 1000
+        def id = 1001
         when:
-        def response = restTemplate.getForEntity('/verification-tokens/' + id, VerificationToken.class)
+        def response = restTemplate.getForEntity('/password-reset-tokens/' + id, PasswordResetToken.class)
 
         then:
         HttpStatus.OK == response.statusCode
     }
 
-    def "delete verification token by id"() {
+    def "delete password reset token by id"() {
         given:
-        def id = 1000
+        def id = 1001
         when:
-        def response = restTemplate.exchange('/verification-tokens/' + id, HttpMethod.DELETE, null, String.class)
+        def response = restTemplate.exchange('/password-reset-tokens/' + id, HttpMethod.DELETE, null, String.class)
 
         then:
         HttpStatus.NO_CONTENT == response.statusCode
 
-        def verificationToken = verificationTokenService.findById(id)
-        verificationToken == Optional.empty()
+        def passwordResetToken = passwordResetTokenService.findById(id)
+        passwordResetToken == Optional.empty()
     }
 
-    def "add verification token"() {
+    def "add password reset token"() {
         given:
         def token = "token123456789"
         def user = 1000
@@ -63,16 +63,16 @@ class CorrectVerificationTokenControllerTest extends Specification {
                 user : user,
         ]
         when:
-        def response = restTemplate.postForEntity('/verification-tokens', body, String.class)
+        def response = restTemplate.postForEntity('/password-reset-tokens', body, String.class)
 
         then:
         HttpStatus.CREATED == response.statusCode
 
-        def verificationTokens = verificationTokenService.findAll() as ArrayList<VerificationToken>
-        verificationTokens.stream().filter { verificationToken ->
+        def passwordResetTokens = passwordResetTokenService.findAll() as ArrayList<PasswordResetToken>
+        passwordResetTokens.stream().filter { passwordResetToken ->
             (
-                    verificationToken.token == token
-                            && verificationToken.user.id == user
+                    passwordResetToken.token == token
+                            && passwordResetToken.user.id == user
             )
         } != Optional.empty()
     }
