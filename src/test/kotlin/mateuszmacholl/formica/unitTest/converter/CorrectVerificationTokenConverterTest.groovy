@@ -1,29 +1,29 @@
 package mateuszmacholl.formica.unitTest.converter
 
-import mateuszmacholl.formica.converter.user.PasswordResetTokenConverter
-import mateuszmacholl.formica.dto.user.passwordResetToken.CreatePasswordResetTokenDto
+import mateuszmacholl.formica.converter.user.VerificationTokenConverter
+import mateuszmacholl.formica.dto.user.verificationToken.CreateVerificationTokenDto
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.service.user.UserService
 import spock.lang.Specification
 
-class PasswordResetTokenConverterTest extends Specification {
+class CorrectVerificationTokenConverterTest extends Specification {
     UserService userService = Mock(UserService)
-    def passwordResetTokenConverter = new PasswordResetTokenConverter()
+    def verificationTokenConverter = new VerificationTokenConverter()
     final static userId = 1000
     final static token = 'token12345'
-    final static createPasswordResetTokenDto = new CreatePasswordResetTokenDto(userId, token)
+    final static createVerificationTokenDto = new CreateVerificationTokenDto(userId, token)
     final static username = 'username'
     final static User user = new User()
 
     def setup() {
-        passwordResetTokenConverter.userService = userService
+        verificationTokenConverter.userService = userService
         user.id = userId
         user.username = username
     }
 
     def 'toEntity_returnCorrectPasswordResetToken'() {
         when:
-        def passwordResetToken = passwordResetTokenConverter.toEntity(createPasswordResetTokenDto)
+        def passwordResetToken = verificationTokenConverter.toEntity(createVerificationTokenDto)
         then:
         passwordResetToken.user.username == user.username
         passwordResetToken.user.id == userId
@@ -36,7 +36,7 @@ class PasswordResetTokenConverterTest extends Specification {
         given:
         user.id = 1
         when:
-        passwordResetTokenConverter.toEntity(createPasswordResetTokenDto)
+        verificationTokenConverter.toEntity(createVerificationTokenDto)
         then:
         thrown(IllegalArgumentException)
 

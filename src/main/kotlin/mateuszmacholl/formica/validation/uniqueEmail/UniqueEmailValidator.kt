@@ -14,7 +14,10 @@ class UniqueEmailValidator : ConstraintValidator<UniqueEmail, String> {
 
     override fun isValid(email: String?, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
-        if (email == null || userService.findByEmail(email) != null) {
+        if (email == null) {
+            return false
+        }
+        if (userService.findByEmail(email) != null) {
             context.buildConstraintViolationWithTemplate("must be unique")
                     .addConstraintViolation()
             return false

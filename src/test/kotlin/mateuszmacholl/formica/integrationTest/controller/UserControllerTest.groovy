@@ -11,6 +11,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.annotation.DirtiesContext
@@ -96,12 +97,14 @@ class UserControllerTest extends Specification {
         def token = "token12345"
 
         when:
-        restTemplate.put('/users/enabled?token=' + token, String.class)
+        def response = restTemplate.exchange('/users/enabled?token=' + token, HttpMethod.PUT, null, String.class)
 
         then:
+        HttpStatus.NO_CONTENT == response.statusCode
         User user = userService.findByUsername("d_fresh_user")
         user.enabled // enabled user
         user.getVerificationToken() == null //deleted token
+
     }
 
     def "send verification token successful"() {
@@ -194,9 +197,10 @@ class UserControllerTest extends Specification {
         ]
 
         when:
-        restTemplate.put('/users/password?token=' + token, body, String.class)
+        def response = restTemplate.exchange('/users/password?token=' + token, HttpMethod.PUT, new HttpEntity(body), String.class)
 
         then:
+        HttpStatus.NO_CONTENT == response.statusCode
         oldPassword != newPassword // changed password
         passwordResetTokenService.findByToken(token) == null // deleted password reset token
     }

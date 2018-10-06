@@ -13,7 +13,7 @@ class VerificationTokenService {
     @Autowired
     lateinit var verificationTokenRepo: VerificationTokenRepo
 
-    fun getToken(token: String): VerificationToken? {
+    fun findByToken(token: String): VerificationToken? {
         return verificationTokenRepo.findByToken(token)
     }
 
@@ -27,7 +27,7 @@ class VerificationTokenService {
 
 
     fun deleteByToken(token: String) {
-        val tokenToDelete = getToken(token)
+        val tokenToDelete = findByToken(token)
         if (tokenToDelete != null) {
             verificationTokenRepo.delete(tokenToDelete)
         }

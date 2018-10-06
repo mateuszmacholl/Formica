@@ -1,29 +1,29 @@
 package mateuszmacholl.formica.unitTest.converter
 
-import mateuszmacholl.formica.converter.user.VerificationTokenConverter
-import mateuszmacholl.formica.dto.user.verificationToken.CreateVerificationTokenDto
+import mateuszmacholl.formica.converter.user.PasswordResetTokenConverter
+import mateuszmacholl.formica.dto.user.passwordResetToken.CreatePasswordResetTokenDto
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.service.user.UserService
 import spock.lang.Specification
 
-class VerificationTokenConverterTest extends Specification {
+class CorrectPasswordResetTokenConverterTest extends Specification {
     UserService userService = Mock(UserService)
-    def verificationTokenConverter = new VerificationTokenConverter()
+    def passwordResetTokenConverter = new PasswordResetTokenConverter()
     final static userId = 1000
     final static token = 'token12345'
-    final static createVerificationTokenDto = new CreateVerificationTokenDto(userId, token)
+    final static createPasswordResetTokenDto = new CreatePasswordResetTokenDto(userId, token)
     final static username = 'username'
     final static User user = new User()
 
     def setup() {
-        verificationTokenConverter.userService = userService
+        passwordResetTokenConverter.userService = userService
         user.id = userId
         user.username = username
     }
 
     def 'toEntity_returnCorrectPasswordResetToken'() {
         when:
-        def passwordResetToken = verificationTokenConverter.toEntity(createVerificationTokenDto)
+        def passwordResetToken = passwordResetTokenConverter.toEntity(createPasswordResetTokenDto)
         then:
         passwordResetToken.user.username == user.username
         passwordResetToken.user.id == userId
@@ -36,7 +36,7 @@ class VerificationTokenConverterTest extends Specification {
         given:
         user.id = 1
         when:
-        verificationTokenConverter.toEntity(createVerificationTokenDto)
+        passwordResetTokenConverter.toEntity(createPasswordResetTokenDto)
         then:
         thrown(IllegalArgumentException)
 

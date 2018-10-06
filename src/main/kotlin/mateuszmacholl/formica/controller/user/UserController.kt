@@ -13,6 +13,9 @@ import mateuszmacholl.formica.service.user.token.PasswordResetTokenService
 import mateuszmacholl.formica.service.user.token.UrlFromTokenCreatorService
 import mateuszmacholl.formica.service.user.token.VerificationTokenService
 import mateuszmacholl.formica.specification.UserSpec
+import mateuszmacholl.formica.validation.accountPasswordReset.CorrectPasswordResetToken
+import mateuszmacholl.formica.validation.accountVerificationToken.CorrectVerificationToken
+import mateuszmacholl.formica.validation.existAccountWithEmail.ExistAccountWithEmail
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -85,23 +88,23 @@ class UserController {
     }
 
     @RequestMapping(value = ["/enabled"], method = [RequestMethod.PUT])
-    fun verifyRegistration(@RequestParam(value = "token") token: String): ResponseEntity<*> {
+    fun verifyRegistration(@RequestParam(value = "token") @CorrectVerificationToken token: String): ResponseEntity<*> {
 
-        val verificationToken = verificationTokenService.getToken(token)
-                ?: return ResponseEntity.badRequest().body("Not found verification token with content: $token")
-        val user = verificationToken.user
-                ?: return ResponseEntity.badRequest().body("Not found user with such verification token: $token")
-        userService.enableUser(user)
+        val verificationToken = verificationTokenService.findByToken(token)
+        val user = verificationToken!!.user
+        userService.enableUser(user!!)
         verificationTokenService.deleteByToken(token)
         return ResponseEntity<Any>(HttpStatus.NO_CONTENT)
     }
 
     @RequestMapping(value = ["/verification-token"], method = [RequestMethod.POST])
-    fun resendVerificationToken(@RequestParam(value = "email") email: String,
+    fun resendVerificationToken(@RequestParam(value = "email") @ExistAccountWithEmail email: String,
                                 @RequestParam clientUrl: String): ResponseEntity<*> {
 
         val user = userService.findByEmail(email)
-                ?: return ResponseEntity.badRequest().body("Not found user with email: $email")
+        if(user!!.enabled!!){
+            return ResponseEntity<Any>("account is already enabled",HttpStatus.BAD_REQUEST)
+        }
 
         val token = generateToken()
         val verificationToken = VerificationToken(token, user)
@@ -109,35 +112,34 @@ class UserController {
 
         val url = urlFromTokenCreatorService.create(clientUrl, token)
         emailSendingServiceContext.getEmailSendingService(VerificationEmailSendingService::class.java)!!.sendEmail(user, url)
-        return ResponseEntity<Any>("Verification token was sent in the written e-mail", HttpStatus.CREATED)
+        return ResponseEntity<Any>("Verification token has been sent in the written e-mail", HttpStatus.CREATED)
     }
 
     @RequestMapping(value = ["/password-reset-token"], method = [RequestMethod.POST])
-    fun resetPassword(@RequestParam(value = "email") email: String,
+    fun resetPassword(@RequestParam(value = "email") @ExistAccountWithEmail email: String,
                       @RequestParam clientUrl: String): ResponseEntity<*> {
 
         val user = userService.findByEmail(email)
-                ?: return ResponseEntity.badRequest().body("Not found user with email: $email")
+
         val token = generateToken()
-        val passwordResetToken = PasswordResetToken(token, user)
+        val passwordResetToken = PasswordResetToken(token, user!!)
         passwordResetTokenService.add(passwordResetToken)
 
         val url = urlFromTokenCreatorService.create(clientUrl, token)
         emailSendingServiceContext.getEmailSendingService(ResetPasswordEmailSendingService::class.java)!!.sendEmail(user, url)
-        return ResponseEntity<Any>("Password reset token was sent in the written e-mail", HttpStatus.CREATED)
+        return ResponseEntity<Any>("Password reset token has been sent in the written e-mail", HttpStatus.CREATED)
     }
 
     @RequestMapping(value = ["/password"], method = [RequestMethod.PUT])
     fun changePassword(@RequestBody @Validated changePasswordDto: ChangePasswordDto,
-                       @RequestParam(value = "token") token: String): ResponseEntity<*> {
+                       @RequestParam(value = "token") @CorrectPasswordResetToken token: String): ResponseEntity<*> {
         val passwordResetToken = passwordResetTokenService.findByToken(token)
-                ?: return ResponseEntity.badRequest().body("Not found password reset token with content: $token")
 
-        val user = passwordResetToken.user
+        val user = passwordResetToken!!.user
 
         userService.changePassword(user!!, changePasswordDto.newPassword!!)
         passwordResetTokenService.deleteByToken(token)
-        return ResponseEntity.ok().build<Any>()
+        return ResponseEntity<Any>(HttpStatus.NO_CONTENT)
     }
 
 }
