@@ -1,10 +1,8 @@
 package mateuszmacholl.formica.dto.user
 
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.NotNull
+import mateuszmacholl.formica.validation.filled.Filled
 
 class ChangePasswordDto {
-    @NotNull
-    @NotEmpty
+    @Filled
     val newPassword: String? = null
 }

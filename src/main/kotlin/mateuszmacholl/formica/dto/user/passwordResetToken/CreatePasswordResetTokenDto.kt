@@ -1,12 +1,11 @@
 package mateuszmacholl.formica.dto.user.passwordResetToken
 
-import javax.validation.constraints.NotEmpty
+import mateuszmacholl.formica.validation.filled.Filled
 import javax.validation.constraints.NotNull
 
 class CreatePasswordResetTokenDto(
         @NotNull
         var user: Int? = null,
-        @NotEmpty
-        @NotNull
+        @Filled
         var token: String? = null
 )
