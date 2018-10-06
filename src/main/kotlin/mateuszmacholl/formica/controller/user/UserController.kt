@@ -1,6 +1,7 @@
 package mateuszmacholl.formica.controller.user
 
 import mateuszmacholl.formica.converter.user.UserConverter
+import mateuszmacholl.formica.dto.user.ChangePasswordDto
 import mateuszmacholl.formica.dto.user.CreateUserDto
 import mateuszmacholl.formica.model.user.PasswordResetToken
 import mateuszmacholl.formica.model.user.VerificationToken
@@ -12,7 +13,6 @@ import mateuszmacholl.formica.service.user.token.PasswordResetTokenService
 import mateuszmacholl.formica.service.user.token.UrlFromTokenCreatorService
 import mateuszmacholl.formica.service.user.token.VerificationTokenService
 import mateuszmacholl.formica.specification.UserSpec
-import mateuszmacholl.shoppinglistapi.dto.user.ChangePasswordDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.util.*
-import javax.validation.Valid
 
 @RestController
 @Validated
@@ -129,7 +128,7 @@ class UserController {
     }
 
     @RequestMapping(value = ["/password"], method = [RequestMethod.PUT])
-    fun changePassword(@RequestBody @Valid changePasswordDto: ChangePasswordDto,
+    fun changePassword(@RequestBody @Validated changePasswordDto: ChangePasswordDto,
                        @RequestParam(value = "token") token: String): ResponseEntity<*> {
         val passwordResetToken = passwordResetTokenService.findByToken(token)
                 ?: return ResponseEntity.badRequest().body("Not found password reset token with content: $token")

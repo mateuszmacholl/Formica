@@ -1,17 +1,8 @@
-package mateuszmacholl.shoppinglistapi.dto.email
+package mateuszmacholl.formica.dto.user.email
 
 import org.springframework.mail.SimpleMailMessage
 
-class EmailDto {
-     var destinationEmail: String? = null
-     var subject: String? = null
-     var body: String? = null
-
-    constructor(destinationEmail: String?, subject: String?, body: String?) {
-        this.destinationEmail = destinationEmail
-        this.subject = subject
-        this.body = body
-    }
+class EmailDto(var destinationEmail: String?, var subject: String?, var body: String?) {
 
     fun constructEmail(): SimpleMailMessage {
         val email = SimpleMailMessage()

@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.service.user.email
 
 import mateuszmacholl.formica.model.user.User
-import mateuszmacholl.shoppinglistapi.dto.email.EmailDto
+import mateuszmacholl.formica.dto.user.email.EmailDto
 import org.springframework.mail.MailSender
 import org.springframework.stereotype.Service
 

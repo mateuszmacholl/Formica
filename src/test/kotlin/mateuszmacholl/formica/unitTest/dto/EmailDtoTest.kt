@@ -1,6 +1,6 @@
 package mateuszmacholl.formica.unitTest.dto
 
-import mateuszmacholl.shoppinglistapi.dto.email.EmailDto
+import mateuszmacholl.formica.dto.user.email.EmailDto
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
