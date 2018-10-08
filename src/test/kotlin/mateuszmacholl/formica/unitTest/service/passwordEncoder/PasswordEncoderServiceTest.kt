@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 internal class PasswordEncoderServiceTest {
 
-    private var passwordEncoderService: PasswordEncoderService? = null
+    private lateinit var passwordEncoderService: PasswordEncoderService
 
     @BeforeEach
     fun init() {
@@ -17,7 +17,7 @@ internal class PasswordEncoderServiceTest {
 
     @Test
     fun encodePassword_returnDifferentPassword() {
-        val encodedPassword = passwordEncoderService!!.encodePassword(PASSWORD)
+        val encodedPassword = passwordEncoderService.encodePassword(PASSWORD)
 
         assertNotEquals(PASSWORD, encodedPassword)
     }

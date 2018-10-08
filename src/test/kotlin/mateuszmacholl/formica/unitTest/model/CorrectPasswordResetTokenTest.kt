@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class CorrectPasswordResetTokenTest {
-    private var passwordResetToken: PasswordResetToken? = null
+    private lateinit var passwordResetToken: PasswordResetToken
 
     @BeforeEach
     fun init() {
@@ -22,18 +22,18 @@ internal class CorrectPasswordResetTokenTest {
 
     @Test
     fun isExpired_true() {
-        passwordResetToken!!.expirationDate = getActualDateEditedByMinutes(-1)
-        assertTrue(passwordResetToken!!.hasExpired())
+        passwordResetToken.expirationDate = getActualDateEditedByMinutes(-1)
+        assertTrue(passwordResetToken.hasExpired())
     }
 
     @Test
     fun isExpired_false() {
-        passwordResetToken!!.expirationDate = getActualDateEditedByMinutes(1)
-        assertFalse(passwordResetToken!!.hasExpired())
+        passwordResetToken.expirationDate = getActualDateEditedByMinutes(1)
+        assertFalse(passwordResetToken.hasExpired())
     }
 
     @Test
     fun hasSetExpirationDate() {
-        assertNotNull(passwordResetToken!!.expirationDate)
+        assertNotNull(passwordResetToken.expirationDate)
     }
 }

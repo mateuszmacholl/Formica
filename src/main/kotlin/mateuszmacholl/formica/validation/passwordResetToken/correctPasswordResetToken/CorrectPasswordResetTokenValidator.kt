@@ -1,16 +1,16 @@
-package mateuszmacholl.formica.validation.accountVerificationToken
+package mateuszmacholl.formica.validation.passwordResetToken.correctPasswordResetToken
 
-import mateuszmacholl.formica.service.user.token.VerificationTokenService
+import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import org.springframework.beans.factory.annotation.Autowired
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
-class CorrectVerificationTokenValidator : ConstraintValidator<CorrectVerificationToken, String> {
+class CorrectPasswordResetTokenValidator : ConstraintValidator<CorrectPasswordResetToken, String> {
 
     @Autowired
-    private val verificationTokenService: VerificationTokenService? = null
+    private val passwordResetTokenService: PasswordResetTokenService? = null
 
-    override fun initialize(constraint: CorrectVerificationToken) {}
+    override fun initialize(constraint: CorrectPasswordResetToken) {}
 
     override fun isValid(token: String?, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
@@ -19,19 +19,19 @@ class CorrectVerificationTokenValidator : ConstraintValidator<CorrectVerificatio
                     .addConstraintViolation()
             return false
         }
-        val verificationToken = verificationTokenService!!.findByToken(token)
+        val passwordResetToken = passwordResetTokenService!!.findByToken(token)
 
-        if (verificationToken == null) {
+        if (passwordResetToken == null) {
             context.buildConstraintViolationWithTemplate("not found such token")
                     .addConstraintViolation()
             return false
         }
-        if (verificationToken.hasExpired()) {
+        if (passwordResetToken.hasExpired()) {
             context.buildConstraintViolationWithTemplate("has expired")
                     .addConstraintViolation()
             return false
         }
-        if (verificationToken.user!!.enabled!!) {
+        if (passwordResetToken.user!!.enabled) {
             context.buildConstraintViolationWithTemplate("already enabled")
                     .addConstraintViolation()
             return false

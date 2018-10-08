@@ -17,7 +17,7 @@ import java.util.*
 @ExtendWith(MockitoExtension::class)
 internal class EmailSendingServiceContextTest {
 
-    private var emailSendingServiceContext: EmailSendingServiceContext? = null
+    private lateinit var emailSendingServiceContext: EmailSendingServiceContext
 
     @Mock
     lateinit var mailSender: MailSender
@@ -30,13 +30,13 @@ internal class EmailSendingServiceContextTest {
         val emailSendingServices = ArrayList<EmailSendingService>()
         emailSendingServices.add(ResetPasswordEmailSendingService(mailSender))
         emailSendingServices.add(VerificationEmailSendingService(mailSender))
-        emailSendingServiceContext!!.setEmailSendingServices(emailSendingServices)
+        emailSendingServiceContext.setEmailSendingServices(emailSendingServices)
     }
 
     @Test
     fun getEmailSendingService_returnCorrectEmailSendingService() {
         //WHEN
-        val emailSendingService = emailSendingServiceContext!!
+        val emailSendingService = emailSendingServiceContext
                 .getEmailSendingService(ResetPasswordEmailSendingService::class.java)
         //GIVEN
         assertTrue(ResetPasswordEmailSendingService::class.java.isInstance(emailSendingService))
@@ -45,7 +45,7 @@ internal class EmailSendingServiceContextTest {
     @Test
     fun getEmailSendingService_returnWrongEmailSendingService() {
         //WHEN
-        val emailSendingService = emailSendingServiceContext!!
+        val emailSendingService = emailSendingServiceContext
                 .getEmailSendingService(ResetPasswordEmailSendingService::class.java)
         //GIVEN
         assertFalse(VerificationEmailSendingService::class.java.isInstance(emailSendingService))

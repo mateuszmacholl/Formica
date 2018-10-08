@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.springframework.mail.MailSender
 
-internal class ResetPasswordEmailSendingServiceTest {
-
-    private var resetPasswordEmailSendingService: ResetPasswordEmailSendingService? = null
+class ResetPasswordEmailSendingServiceTest {
+    private lateinit var resetPasswordEmailSendingService: ResetPasswordEmailSendingService
+    private val user = User()
+    private val url = "t_url"
 
     @BeforeEach
     fun init() {
@@ -18,23 +19,17 @@ internal class ResetPasswordEmailSendingServiceTest {
         resetPasswordEmailSendingService = ResetPasswordEmailSendingService(mailSender)
 
         //GIVEN
-        USER.email = "t_email"
+        user.email = "t_email"
     }
 
     @Test
     fun generateEmail_returnsCorrectlyCreatedEmailDto() {
 
         //WHEN
-        val emailDto = resetPasswordEmailSendingService!!.generateEmail(USER, URL)
+        val emailDto = resetPasswordEmailSendingService.generateEmail(user.email!!, url)
         //THEN
-        assertEquals(emailDto.destinationEmail, USER.email)
-        assertEquals(emailDto.body, URL)
+        assertEquals(emailDto.destinationEmail, user.email)
+        assertEquals(emailDto.body, url)
 
-    }
-
-    companion object {
-
-        private val USER = User()
-        private const val URL = "t_url"
     }
 }

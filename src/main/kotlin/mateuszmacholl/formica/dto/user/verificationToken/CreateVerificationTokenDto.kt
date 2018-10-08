@@ -3,9 +3,9 @@ package mateuszmacholl.formica.dto.user.verificationToken
 import mateuszmacholl.formica.validation.filled.Filled
 import javax.validation.constraints.NotNull
 
-class CreateVerificationTokenDto(
+data class CreateVerificationTokenDto(
         @field:NotNull
-        val user: Int? = null,
+        val user: Int,
         @field:Filled
-        val token: String? = null
+        val token: String
 )

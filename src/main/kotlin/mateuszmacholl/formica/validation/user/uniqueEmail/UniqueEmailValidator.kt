@@ -1,20 +1,20 @@
-package mateuszmacholl.formica.validation.uniqueUsername
+package mateuszmacholl.formica.validation.user.uniqueEmail
 
 import mateuszmacholl.formica.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
-class UniqueUsernameValidator : ConstraintValidator<UniqueUsername, String> {
+class UniqueEmailValidator : ConstraintValidator<UniqueEmail, String> {
 
     @Autowired
     lateinit var userService: UserService
 
-    override fun initialize(constraint: UniqueUsername) {}
+    override fun initialize(constraint: UniqueEmail) {}
 
-    override fun isValid(username: String?, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(email: String?, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
-        if (username == null || userService.findByUsername(username) != null) {
+        if (email == null || userService.findByEmail(email) != null) {
             context.buildConstraintViolationWithTemplate("must be unique")
                     .addConstraintViolation()
             return false

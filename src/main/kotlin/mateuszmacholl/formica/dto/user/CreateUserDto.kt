@@ -1,21 +1,21 @@
 package mateuszmacholl.formica.dto.user
 
 import mateuszmacholl.formica.validation.filled.Filled
-import mateuszmacholl.formica.validation.uniqueEmail.UniqueEmail
-import mateuszmacholl.formica.validation.uniqueUsername.UniqueUsername
+import mateuszmacholl.formica.validation.user.uniqueEmail.UniqueEmail
+import mateuszmacholl.formica.validation.user.uniqueUsername.UniqueUsername
 
-class CreateUserDto {
-    @UniqueUsername
-    @Filled
-    var username: String? = null
+data class CreateUserDto(
+    @field:UniqueUsername
+    @field:Filled
+    val username: String,
 
-    @UniqueEmail
-    @Filled
-    var email: String? = null
+    @field:UniqueEmail
+    @field:Filled
+    val email: String,
 
-    @Filled
-    var password: String? = null
+    @field:Filled
+    val password: String,
 
-    @Filled
-    var url: String? = null
-}
+    @field:Filled
+    val url: String
+)

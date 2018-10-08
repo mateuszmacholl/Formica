@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class CorrectVerificationTokenTest {
-    private var verificationToken: VerificationToken? = null
+    private lateinit var verificationToken: VerificationToken
 
     @BeforeEach
     fun init() {
@@ -22,18 +22,18 @@ internal class CorrectVerificationTokenTest {
 
     @Test
     fun isExpired_true() {
-        verificationToken!!.expirationDate = getActualDateEditedByMinutes(-1)
-        assertTrue(verificationToken!!.hasExpired())
+        verificationToken.expirationDate = getActualDateEditedByMinutes(-1)
+        assertTrue(verificationToken.hasExpired())
     }
 
     @Test
     fun isExpired_false() {
-        verificationToken!!.expirationDate = getActualDateEditedByMinutes(1)
-        assertFalse(verificationToken!!.hasExpired())
+        verificationToken.expirationDate = getActualDateEditedByMinutes(1)
+        assertFalse(verificationToken.hasExpired())
     }
 
     @Test
     fun hasSetExpirationDate() {
-        assertNotNull(verificationToken!!.expirationDate)
+        assertNotNull(verificationToken.expirationDate)
     }
 }

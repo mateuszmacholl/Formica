@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.uniqueUsername
+package mateuszmacholl.formica.validation.user.uniqueUsername
 
 import javax.validation.Constraint
 import javax.validation.Payload

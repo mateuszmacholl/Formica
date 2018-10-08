@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.accountVerificationToken
+package mateuszmacholl.formica.validation.verificationToken.correctVerificationToken
 
 import javax.validation.Constraint
 import javax.validation.Payload

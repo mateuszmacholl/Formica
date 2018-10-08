@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.integrationTest.controller
 
 import mateuszmacholl.formica.model.user.PasswordResetToken
-import mateuszmacholl.formica.service.user.token.PasswordResetTokenService
+import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase

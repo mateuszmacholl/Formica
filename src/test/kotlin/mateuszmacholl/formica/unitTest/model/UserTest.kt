@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class UserTest {
-    private var user: User? = null
+    private lateinit var user: User
 
     @BeforeEach
     fun init() {
@@ -16,8 +16,8 @@ internal class UserTest {
 
     @Test
     fun constructor_defaultDataIsSet() {
-        assertEquals(user!!.enabled, false)
-        assertEquals(user!!.roles[0], "user")
-        assertNotNull(user!!.creationDate)
+        assertEquals(user.enabled, false)
+        assertEquals(user.roles[0], "user")
+        assertNotNull(user.creationDate)
     }
 }

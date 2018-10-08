@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.uniqueEmail
+package mateuszmacholl.formica.validation.user.uniqueEmail
 
 import javax.validation.Constraint
 import javax.validation.Payload

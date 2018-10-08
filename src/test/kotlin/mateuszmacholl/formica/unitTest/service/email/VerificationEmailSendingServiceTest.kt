@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.springframework.mail.MailSender
 
-internal class VerificationEmailSendingServiceTest {
-
-    private var verificationEmailSendingService: VerificationEmailSendingService? = null
+class VerificationEmailSendingServiceTest {
+    private lateinit var verificationEmailSendingService: VerificationEmailSendingService
+    private val user = User()
+    private val url = "t_url"
 
     @BeforeEach
     fun init() {
@@ -18,23 +19,17 @@ internal class VerificationEmailSendingServiceTest {
         verificationEmailSendingService = VerificationEmailSendingService(mailSender)
 
         //GIVEN
-        USER.email = "t_email"
+        user.email = "t_email"
     }
 
     @Test
     fun generateEmail_returnsCorrectlyCreatedEmailDto() {
 
         //WHEN
-        val emailDto = verificationEmailSendingService!!.generateEmail(USER, URL)
+        val emailDto = verificationEmailSendingService.generateEmail(user.email!!, url)
         //THEN
-        assertEquals(emailDto.destinationEmail, USER.email)
-        assertEquals(emailDto.body, URL)
+        assertEquals(emailDto.destinationEmail, user.email)
+        assertEquals(emailDto.body, url)
 
-    }
-
-    companion object {
-
-        private val USER = User()
-        private const val URL = "t_url"
     }
 }

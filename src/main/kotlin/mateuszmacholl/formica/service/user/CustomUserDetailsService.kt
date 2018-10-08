@@ -24,7 +24,7 @@ constructor(private val userRepo: UserRepo) : UserDetailsService {
         val user = userRepo.findByUsername(username) ?: throw UsernameNotFoundException(
                 "No user found with username: $username")
         return org.springframework.security.core.userdetails.User(user.username,
-                user.password, user.enabled!!, true,
+                user.password, user.enabled, true,
                 true, true,
                 getGrantedAuthorities(user))
     }

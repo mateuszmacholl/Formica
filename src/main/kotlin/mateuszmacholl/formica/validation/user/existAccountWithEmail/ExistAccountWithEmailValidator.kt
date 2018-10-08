@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.existAccountWithEmail
+package mateuszmacholl.formica.validation.user.existAccountWithEmail
 
 import mateuszmacholl.formica.helper.EmailPattern
 import mateuszmacholl.formica.service.user.UserService

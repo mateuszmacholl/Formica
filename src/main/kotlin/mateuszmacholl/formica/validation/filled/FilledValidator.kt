@@ -9,13 +9,8 @@ class FilledValidator : ConstraintValidator<Filled, String> {
     override fun isValid(value: String?, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
 
-        if (value == null) {
-            context.buildConstraintViolationWithTemplate("Can't be null")
-                    .addConstraintViolation()
-            return false
-        }
-        if (value.isEmpty()) {
-            context.buildConstraintViolationWithTemplate("Can't be empty")
+        if (value.isNullOrBlank()) {
+            context.buildConstraintViolationWithTemplate("Can't be null or blank")
                     .addConstraintViolation()
             return false
         }

@@ -3,26 +3,23 @@ package mateuszmacholl.formica.controller.user
 import mateuszmacholl.formica.converter.user.UserConverter
 import mateuszmacholl.formica.dto.user.ChangePasswordDto
 import mateuszmacholl.formica.dto.user.CreateUserDto
-import mateuszmacholl.formica.model.user.PasswordResetToken
-import mateuszmacholl.formica.model.user.VerificationToken
+import mateuszmacholl.formica.service.token.PasswordResetTokenService
+import mateuszmacholl.formica.service.token.VerificationTokenService
+import mateuszmacholl.formica.service.url.UrlConstructorService
 import mateuszmacholl.formica.service.user.UserService
 import mateuszmacholl.formica.service.user.email.EmailSendingServiceContext
 import mateuszmacholl.formica.service.user.email.ResetPasswordEmailSendingService
 import mateuszmacholl.formica.service.user.email.VerificationEmailSendingService
-import mateuszmacholl.formica.service.user.token.PasswordResetTokenService
-import mateuszmacholl.formica.service.user.token.UrlFromTokenCreatorService
-import mateuszmacholl.formica.service.user.token.VerificationTokenService
 import mateuszmacholl.formica.specification.UserSpec
-import mateuszmacholl.formica.validation.accountPasswordReset.CorrectPasswordResetToken
-import mateuszmacholl.formica.validation.accountVerificationToken.CorrectVerificationToken
-import mateuszmacholl.formica.validation.existAccountWithEmail.ExistAccountWithEmail
+import mateuszmacholl.formica.validation.passwordResetToken.correctPasswordResetToken.CorrectPasswordResetToken
+import mateuszmacholl.formica.validation.user.existAccountWithEmail.ExistAccountWithEmail
+import mateuszmacholl.formica.validation.verificationToken.correctVerificationToken.CorrectVerificationToken
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 @Validated
@@ -37,10 +34,9 @@ class UserController {
     @Autowired
     lateinit var emailSendingServiceContext: EmailSendingServiceContext
     @Autowired
-    lateinit var urlFromTokenCreatorService: UrlFromTokenCreatorService
+    lateinit var urlConstructorService: UrlConstructorService
     @Autowired
     lateinit var userConverter: UserConverter
-
 
     @RequestMapping(value = [""], method = [RequestMethod.GET])
     fun getAllBy(userSpec: UserSpec, pageable: Pageable): ResponseEntity<*> {
@@ -54,7 +50,7 @@ class UserController {
         return if (!user.isPresent) {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
-            ResponseEntity(user, HttpStatus.OK)
+            return ResponseEntity(user, HttpStatus.OK)
         }
     }
 
@@ -63,12 +59,10 @@ class UserController {
         val user = userConverter.toEntity(createUserDto)
         userService.add(user)
 
-        val token = generateToken()
-        val verificationToken = VerificationToken(token, user)
-        verificationTokenService.add(verificationToken)
+        val verificationToken = verificationTokenService.generateToken(user)
 
-        val url = urlFromTokenCreatorService.create(createUserDto.url, token)
-        emailSendingServiceContext.getEmailSendingService(VerificationEmailSendingService::class.java)!!.sendEmail(user, url)
+        val clientUrl = urlConstructorService.constructWithToken(createUserDto.url, verificationToken.token!!)
+        emailSendingServiceContext.getEmailSendingService(VerificationEmailSendingService::class.java)!!.sendEmail(user.email!!, clientUrl)
         return ResponseEntity<Any>(HttpStatus.CREATED)
     }
 
@@ -79,17 +73,12 @@ class UserController {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
             userService.delete(user.get())
-            return ResponseEntity<Any>(HttpStatus.NO_CONTENT)
+            ResponseEntity<Any>(HttpStatus.NO_CONTENT)
         }
-    }
-
-    private fun generateToken(): String {
-        return UUID.randomUUID().toString()
     }
 
     @RequestMapping(value = ["/enabled"], method = [RequestMethod.PUT])
     fun verifyRegistration(@RequestParam(value = "token") @CorrectVerificationToken token: String): ResponseEntity<*> {
-
         val verificationToken = verificationTokenService.findByToken(token)
         val user = verificationToken!!.user
         userService.enableUser(user!!)
@@ -99,34 +88,29 @@ class UserController {
 
     @RequestMapping(value = ["/verification-token"], method = [RequestMethod.POST])
     fun resendVerificationToken(@RequestParam(value = "email") @ExistAccountWithEmail email: String,
-                                @RequestParam clientUrl: String): ResponseEntity<*> {
-
+                                @RequestParam url: String): ResponseEntity<*> {
         val user = userService.findByEmail(email)
-        if(user!!.enabled!!){
-            return ResponseEntity<Any>("account is already enabled",HttpStatus.BAD_REQUEST)
+        if (user!!.enabled) {
+            return ResponseEntity<Any>("account is already enabled", HttpStatus.BAD_REQUEST)
         }
 
-        val token = generateToken()
-        val verificationToken = VerificationToken(token, user)
-        verificationTokenService.add(verificationToken)
+        val verificationToken = verificationTokenService.generateToken(user)
 
-        val url = urlFromTokenCreatorService.create(clientUrl, token)
-        emailSendingServiceContext.getEmailSendingService(VerificationEmailSendingService::class.java)!!.sendEmail(user, url)
+        val clientUrl = urlConstructorService.constructWithToken(url, verificationToken.token!!)
+        emailSendingServiceContext.getEmailSendingService(VerificationEmailSendingService::class.java)!!.sendEmail(user.email!!, clientUrl)
         return ResponseEntity<Any>("Verification token has been sent in the written e-mail", HttpStatus.CREATED)
     }
 
     @RequestMapping(value = ["/password-reset-token"], method = [RequestMethod.POST])
     fun resetPassword(@RequestParam(value = "email") @ExistAccountWithEmail email: String,
-                      @RequestParam clientUrl: String): ResponseEntity<*> {
+                      @RequestParam url: String): ResponseEntity<*> {
 
         val user = userService.findByEmail(email)
 
-        val token = generateToken()
-        val passwordResetToken = PasswordResetToken(token, user!!)
-        passwordResetTokenService.add(passwordResetToken)
+        val passwordResetToken = passwordResetTokenService.generateToken(user!!)
 
-        val url = urlFromTokenCreatorService.create(clientUrl, token)
-        emailSendingServiceContext.getEmailSendingService(ResetPasswordEmailSendingService::class.java)!!.sendEmail(user, url)
+        val clientUrl = urlConstructorService.constructWithToken(url, passwordResetToken.token!!)
+        emailSendingServiceContext.getEmailSendingService(ResetPasswordEmailSendingService::class.java)!!.sendEmail(user.email!!, clientUrl)
         return ResponseEntity<Any>("Password reset token has been sent in the written e-mail", HttpStatus.CREATED)
     }
 
@@ -137,7 +121,7 @@ class UserController {
 
         val user = passwordResetToken!!.user
 
-        userService.changePassword(user!!, changePasswordDto.newPassword!!)
+        userService.changePassword(user!!, changePasswordDto.newPassword)
         passwordResetTokenService.deleteByToken(token)
         return ResponseEntity<Any>(HttpStatus.NO_CONTENT)
     }

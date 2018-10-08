@@ -3,9 +3,9 @@ package mateuszmacholl.formica.integrationTest.controller
 import mateuszmacholl.formica.model.user.PasswordResetToken
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.model.user.VerificationToken
+import mateuszmacholl.formica.service.token.VerificationTokenService
 import mateuszmacholl.formica.service.user.UserService
-import mateuszmacholl.formica.service.user.token.PasswordResetTokenService
-import mateuszmacholl.formica.service.user.token.VerificationTokenService
+import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -115,7 +115,7 @@ class UserControllerTest extends Specification {
         when:
         def response = restTemplate.postForEntity('/users/verification-token?' +
                 'email=' + email +
-                '&clientUrl=' + clientUrl,
+                '&url=' + clientUrl,
                 null,
                 String.class)
 
@@ -133,7 +133,7 @@ class UserControllerTest extends Specification {
         when:
         def response = restTemplate.postForEntity('/users/verification-token?' +
                 'email=' + email +
-                '&clientUrl=' + clientUrl,
+                '&url=' + clientUrl,
                 null,
                 String.class)
 
@@ -153,7 +153,7 @@ class UserControllerTest extends Specification {
         when:
         def response = restTemplate.postForEntity('/users/password-reset-token?' +
                 'email=' + email +
-                '&clientUrl=' + clientUrl,
+                '&url=' + clientUrl,
                 null,
                 String.class)
 
@@ -174,7 +174,7 @@ class UserControllerTest extends Specification {
         when:
         def response = restTemplate.postForEntity('/users/password-reset-token?' +
                 'email=' + email +
-                '&clientUrl=' + clientUrl,
+                '&url=' + clientUrl,
                 null,
                 String.class)
 

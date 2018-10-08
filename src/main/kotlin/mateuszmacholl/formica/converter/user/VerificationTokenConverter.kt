@@ -12,11 +12,11 @@ class VerificationTokenConverter {
     lateinit var userService: UserService
 
     fun toEntity(createVerificationTokenDto: CreateVerificationTokenDto): VerificationToken {
-        val user = userService.findById(createVerificationTokenDto.user!!)
+        val user = userService.findById(createVerificationTokenDto.user)
         if(!user.isPresent){
             throw IllegalArgumentException()
         }
-        return VerificationToken(createVerificationTokenDto.token!!, user.get())
+        return VerificationToken(token = createVerificationTokenDto.token, user = user.get())
     }
 
 }

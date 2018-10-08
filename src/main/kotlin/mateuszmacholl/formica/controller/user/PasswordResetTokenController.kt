@@ -2,7 +2,7 @@ package mateuszmacholl.formica.controller.user
 
 import mateuszmacholl.formica.converter.user.PasswordResetTokenConverter
 import mateuszmacholl.formica.dto.user.passwordResetToken.CreatePasswordResetTokenDto
-import mateuszmacholl.formica.service.user.token.PasswordResetTokenService
+import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import mateuszmacholl.formica.specification.PasswordResetTokenSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
@@ -50,7 +50,7 @@ class PasswordResetTokenController {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
             passwordResetTokenService.delete(passwordResetToken.get())
-            return ResponseEntity<Any>(HttpStatus.NO_CONTENT )
+            ResponseEntity<Any>(HttpStatus.NO_CONTENT )
         }
     }
 

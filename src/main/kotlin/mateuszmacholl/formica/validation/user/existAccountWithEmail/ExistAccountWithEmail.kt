@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.existAccountWithEmail
+package mateuszmacholl.formica.validation.user.existAccountWithEmail
 
 import javax.validation.Constraint
 import javax.validation.Payload

@@ -2,7 +2,7 @@ package mateuszmacholl.formica.controller.user
 
 import mateuszmacholl.formica.converter.user.VerificationTokenConverter
 import mateuszmacholl.formica.dto.user.verificationToken.CreateVerificationTokenDto
-import mateuszmacholl.formica.service.user.token.VerificationTokenService
+import mateuszmacholl.formica.service.token.VerificationTokenService
 import mateuszmacholl.formica.specification.VerificationTokenSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
@@ -50,7 +50,7 @@ class VerificationTokenController {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
             verificationTokenService.delete(verificationToken.get())
-            return ResponseEntity<Any>(HttpStatus.NO_CONTENT )
+            ResponseEntity<Any>(HttpStatus.NO_CONTENT )
         }
     }
 

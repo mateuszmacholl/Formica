@@ -1,5 +1,6 @@
-package mateuszmacholl.formica.service.user.token
+package mateuszmacholl.formica.service.token
 
+import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.model.user.VerificationToken
 import mateuszmacholl.formica.repo.VerificationTokenRepo
 import mateuszmacholl.formica.specification.VerificationTokenSpec
@@ -17,12 +18,12 @@ class VerificationTokenService {
         return verificationTokenRepo.findByToken(token)
     }
 
-    fun add(verificationToken: VerificationToken){
+    fun add(verificationToken: VerificationToken): VerificationToken{
         val id = verificationToken.user!!.id
         if(verificationTokenRepo.findById(id!!).isPresent){
             deleteById(id)
         }
-        verificationTokenRepo.save(verificationToken)
+        return verificationTokenRepo.save(verificationToken)
     }
 
 
@@ -48,6 +49,12 @@ class VerificationTokenService {
 
     fun findById(id: Int): Optional<VerificationToken> {
         return verificationTokenRepo.findById(id)
+    }
+
+    fun generateToken(user: User): VerificationToken{
+        val token = UUID.randomUUID().toString()
+        val verificationToken = VerificationToken(token = token, user = user)
+        return add(verificationToken)
     }
 
 
