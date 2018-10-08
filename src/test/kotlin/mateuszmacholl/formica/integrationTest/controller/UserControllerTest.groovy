@@ -92,6 +92,26 @@ class UserControllerTest extends Specification {
         task == Optional.empty()
     }
 
+    def "get verification token"(){
+        given:
+        def id = 1000
+        when:
+        def response = restTemplate.getForEntity('/users/' + id + '/verification-tokens', VerificationToken.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
+    }
+
+    def "get password reset token"(){
+        given:
+        def id = 1001
+        when:
+        def response = restTemplate.getForEntity('/users/' + id + '/password-reset-tokens', PasswordResetToken.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
+    }
+
     def "verification successful"() {
         given:
         def token = "token12345"
@@ -113,7 +133,7 @@ class UserControllerTest extends Specification {
         def clientUrl = "clientUrl"
 
         when:
-        def response = restTemplate.postForEntity('/users/verification-token?' +
+        def response = restTemplate.postForEntity('/users/verification-tokens?' +
                 'email=' + email +
                 '&url=' + clientUrl,
                 null,
@@ -131,7 +151,7 @@ class UserControllerTest extends Specification {
         verificationTokenService.add(oldToken)
 
         when:
-        def response = restTemplate.postForEntity('/users/verification-token?' +
+        def response = restTemplate.postForEntity('/users/verification-tokens?' +
                 'email=' + email +
                 '&url=' + clientUrl,
                 null,
@@ -151,7 +171,7 @@ class UserControllerTest extends Specification {
         def clientUrl = "clientUrl"
 
         when:
-        def response = restTemplate.postForEntity('/users/password-reset-token?' +
+        def response = restTemplate.postForEntity('/users/password-reset-tokens?' +
                 'email=' + email +
                 '&url=' + clientUrl,
                 null,
@@ -172,7 +192,7 @@ class UserControllerTest extends Specification {
         passwordResetTokenService.add(oldToken)
 
         when:
-        def response = restTemplate.postForEntity('/users/password-reset-token?' +
+        def response = restTemplate.postForEntity('/users/password-reset-tokens?' +
                 'email=' + email +
                 '&url=' + clientUrl,
                 null,

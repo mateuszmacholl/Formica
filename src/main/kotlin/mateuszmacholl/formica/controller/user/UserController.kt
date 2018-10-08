@@ -86,7 +86,18 @@ class UserController {
         return ResponseEntity<Any>(HttpStatus.NO_CONTENT)
     }
 
-    @RequestMapping(value = ["/verification-token"], method = [RequestMethod.POST])
+    @RequestMapping(value = ["/{id}/verification-tokens"], method = [RequestMethod.GET])
+    fun getVerificationToken(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val user = userService.findById(id)
+        return if (!user.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val verificationToken = user.get().verificationToken
+            ResponseEntity<Any>(verificationToken, HttpStatus.OK)
+        }
+    }
+
+    @RequestMapping(value = ["/verification-tokens"], method = [RequestMethod.POST])
     fun resendVerificationToken(@RequestParam(value = "email") @ExistAccountWithEmail email: String,
                                 @RequestParam url: String): ResponseEntity<*> {
         val user = userService.findByEmail(email)
@@ -101,7 +112,7 @@ class UserController {
         return ResponseEntity<Any>("Verification token has been sent in the written e-mail", HttpStatus.CREATED)
     }
 
-    @RequestMapping(value = ["/password-reset-token"], method = [RequestMethod.POST])
+    @RequestMapping(value = ["/password-reset-tokens"], method = [RequestMethod.POST])
     fun resetPassword(@RequestParam(value = "email") @ExistAccountWithEmail email: String,
                       @RequestParam url: String): ResponseEntity<*> {
 
@@ -112,6 +123,17 @@ class UserController {
         val clientUrl = urlConstructorService.constructWithToken(url, passwordResetToken.token!!)
         emailSendingServiceContext.getEmailSendingService(ResetPasswordEmailSendingService::class.java)!!.sendEmail(user.email!!, clientUrl)
         return ResponseEntity<Any>("Password reset token has been sent in the written e-mail", HttpStatus.CREATED)
+    }
+
+    @RequestMapping(value = ["/{id}/password-reset-tokens"], method = [RequestMethod.GET])
+    fun getPasswordResetToken(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val user = userService.findById(id)
+        return if (!user.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val passwordResetToken = user.get().passwordResetToken
+            ResponseEntity<Any>(passwordResetToken, HttpStatus.OK)
+        }
     }
 
     @RequestMapping(value = ["/password"], method = [RequestMethod.PUT])

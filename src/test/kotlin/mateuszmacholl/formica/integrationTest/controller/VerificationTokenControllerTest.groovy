@@ -1,5 +1,6 @@
 package mateuszmacholl.formica.integrationTest.controller
 
+import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.model.user.VerificationToken
 import mateuszmacholl.formica.service.token.VerificationTokenService
 import org.springframework.beans.factory.annotation.Autowired
@@ -75,6 +76,16 @@ class VerificationTokenControllerTest extends Specification {
                             && verificationToken.user.id == user
             )
         } != Optional.empty()
+    }
+
+    def "get user"(){
+        given:
+        def id = 1000
+        when:
+        def response = restTemplate.getForEntity('/verification-tokens/' + id + '/users', User.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
     }
 
 }

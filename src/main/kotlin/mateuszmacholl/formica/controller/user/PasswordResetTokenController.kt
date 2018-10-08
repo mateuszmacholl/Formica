@@ -54,4 +54,17 @@ class PasswordResetTokenController {
         }
     }
 
+    @RequestMapping(value = ["/{id}/users"], method = [RequestMethod.GET])
+    fun getUser(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val passwordResetToken = passwordResetTokenService.findById(id)
+        return if (!passwordResetToken.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val user = passwordResetToken.get().user
+            ResponseEntity<Any>(user, HttpStatus.OK )
+        }
+    }
+
+
+
 }

@@ -19,10 +19,14 @@ INSERT INTO tag(id, name) VALUES (1001, 'books');
 INSERT INTO tag(id, name) VALUES (1002, 'cars');
 INSERT INTO tag(id, name) VALUES (1003, 'java');
 
-INSERT INTO post(id, creation_date, content, title) VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000');
-INSERT INTO post(id, creation_date, content, title) VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001');
-INSERT INTO post(id, creation_date, content, title) VALUES (1002,'2118-09-01 12:00:00','content1002', 'title1002');
-INSERT INTO post(id, creation_date, content, title) VALUES (1003,'2118-09-01 12:00:00', 'content1003', 'title1003');
+INSERT INTO post(id, creation_date, content, title, solved, votes, author_id)
+ VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', false, -10, 1000);
+INSERT INTO post(id, creation_date, content, title, solved, votes, author_id)
+VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001', true, 10, 1000);
+INSERT INTO post(id, creation_date, content, title, solved, votes, author_id)
+VALUES (1002,'2118-09-01 12:00:00','content1002', 'title1002', true, 0, 1000);
+INSERT INTO post(id, creation_date, content, title, solved, votes, author_id)
+VALUES (1003,'2118-09-01 12:00:00', 'content1003', 'title1003', false, 0, 1001);
 
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1001);

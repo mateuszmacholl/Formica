@@ -54,4 +54,15 @@ class VerificationTokenController {
         }
     }
 
+    @RequestMapping(value = ["/{id}/users"], method = [RequestMethod.GET])
+    fun getUser(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val verificationToken = verificationTokenService.findById(id)
+        return if (!verificationToken.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val user = verificationToken.get().user
+            ResponseEntity<Any>(user, HttpStatus.OK )
+        }
+    }
+
 }

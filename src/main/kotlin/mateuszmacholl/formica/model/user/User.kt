@@ -2,6 +2,7 @@ package mateuszmacholl.formica.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import mateuszmacholl.formica.model.post.Post
 import org.springframework.format.annotation.DateTimeFormat
 import java.util.*
 import javax.persistence.*
@@ -34,6 +35,10 @@ data class User(
     @JsonIgnore
     @OneToOne(mappedBy = "user")
     var verificationToken: VerificationToken? = null
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "author", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Post::class)
+    var posts: Set<Post> = mutableSetOf()
 
     init {
         roles.add("user")

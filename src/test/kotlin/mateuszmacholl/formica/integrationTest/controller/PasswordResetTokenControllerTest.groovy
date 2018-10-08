@@ -1,6 +1,7 @@
 package mateuszmacholl.formica.integrationTest.controller
 
 import mateuszmacholl.formica.model.user.PasswordResetToken
+import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
@@ -75,6 +76,16 @@ class PasswordResetTokenControllerTest extends Specification {
                             && passwordResetToken.user.id == user
             )
         } != Optional.empty()
+    }
+
+    def "get user"(){
+        given:
+        def id = 1000
+        when:
+        def response = restTemplate.getForEntity('/password-reset-tokens/' + id + '/users', User.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
     }
 
 }
