@@ -3,7 +3,6 @@ package mateuszmacholl.formica.validation.user.existAccountWithEmail
 import mateuszmacholl.formica.helper.EmailPattern
 import mateuszmacholl.formica.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
-
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
@@ -14,10 +13,10 @@ class ExistAccountWithEmailValidator : ConstraintValidator<ExistAccountWithEmail
 
     override fun initialize(constraint: ExistAccountWithEmail?) {}
 
-    override fun isValid(email: String, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(email: String?, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
 
-        if (!EmailPattern.isCorrect(email)) {
+        if (email == null || !EmailPattern.isCorrect(email)) {
             context.buildConstraintViolationWithTemplate("wrong pattern")
                     .addConstraintViolation()
             return false

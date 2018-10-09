@@ -1,8 +1,8 @@
 package mateuszmacholl.formica.integrationTest.controller
 
-import mateuszmacholl.formica.model.token.PasswordResetToken
-import mateuszmacholl.formica.model.user.User
-import mateuszmacholl.formica.service.token.PasswordResetTokenService
+import mateuszmacholl.formica.model.post.Post
+import mateuszmacholl.formica.model.tag.Tag
+import mateuszmacholl.formica.service.tag.TagService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -18,71 +18,68 @@ import spock.lang.Specification
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.ANY)
 @ActiveProfiles(value = ["test"])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class PasswordResetTokenControllerTest extends Specification {
+class TagControllerTest extends Specification {
     @Autowired
-    PasswordResetTokenService passwordResetTokenService
+    TagService tagService
     @Autowired
     private TestRestTemplate restTemplate
 
-    def "get all password reset tokens"() {
+    def "get all tags"() {
         when:
-        def response = restTemplate.getForEntity('/password-reset-tokens', String.class)
+        def response = restTemplate.getForEntity('/tags', String.class)
 
         then:
         HttpStatus.OK == response.statusCode
     }
 
-    def "get password reset token by id"() {
+    def "get tag by id"() {
         given:
         def id = 1001
         when:
-        def response = restTemplate.getForEntity('/password-reset-tokens/' + id, PasswordResetToken.class)
+        def response = restTemplate.getForEntity('/tags/' + id, Tag.class)
 
         then:
         HttpStatus.OK == response.statusCode
     }
 
-    def "delete password reset token by id"() {
+    def "delete tag by id"() {
         given:
         def id = 1001
         when:
-        def response = restTemplate.exchange('/password-reset-tokens/' + id, HttpMethod.DELETE, null, String.class)
+        def response = restTemplate.exchange('/tags/' + id, HttpMethod.DELETE, null, String.class)
 
         then:
         HttpStatus.NO_CONTENT == response.statusCode
 
-        def passwordResetToken = passwordResetTokenService.findById(id)
-        passwordResetToken == Optional.empty()
+        def tag = tagService.findById(id)
+        tag == Optional.empty()
     }
 
-    def "add password reset token"() {
+    def "add tag"() {
         given:
-        def token = "token123456789"
-        def user = "d_enabled_user"
+        def name = "c++"
         def body = [
-                token: token,
-                user : user,
+                name: name
         ]
         when:
-        def response = restTemplate.postForEntity('/password-reset-tokens', body, String.class)
+        def response = restTemplate.postForEntity('/tags', body, String.class)
 
         then:
         HttpStatus.CREATED == response.statusCode
 
-        def passwordResetTokens = passwordResetTokenService.findAll() as ArrayList<PasswordResetToken>
-        passwordResetTokens.stream().filter { passwordResetToken ->
+        def tags = tagService.findAll() as ArrayList<Tag>
+        tags.stream().filter { tag ->
             (
-                    passwordResetToken.token == token
-                            && passwordResetToken.user.username == user
+                    tag.name == name
             )
         } != Optional.empty()
     }
 
-    def "get user"(){
+    def "get posts"(){
         given:
         def id = 1000
         when:
-        def response = restTemplate.getForEntity('/password-reset-tokens/' + id + '/users', User.class)
+        def response = restTemplate.getForEntity('/tags/' + id + '/posts', Post[].class)
         then:
         HttpStatus.OK == response.statusCode
         response.body != null

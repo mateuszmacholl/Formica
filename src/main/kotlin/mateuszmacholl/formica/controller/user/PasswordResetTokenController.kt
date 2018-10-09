@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.controller.user
 
-import mateuszmacholl.formica.converter.user.PasswordResetTokenConverter
-import mateuszmacholl.formica.dto.user.passwordResetToken.CreatePasswordResetTokenDto
+import mateuszmacholl.formica.converter.token.PasswordResetTokenConverter
+import mateuszmacholl.formica.dto.token.passwordResetToken.CreatePasswordResetTokenDto
 import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import mateuszmacholl.formica.specification.PasswordResetTokenSpec
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.model.post.tag
+package mateuszmacholl.formica.model.tag
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import mateuszmacholl.formica.model.post.Post

@@ -143,7 +143,7 @@ class UserControllerTest extends Specification {
         HttpStatus.CREATED == response.statusCode
     }
 
-    def "replace and send verification token if already exist one successful"() {
+    def "replace and send verification token if already one exist successful"() {
         given:
         def email = "d_fresh_default@gmail.com"
         def clientUrl = "clientUrl"
@@ -184,7 +184,7 @@ class UserControllerTest extends Specification {
         user.passwordResetToken != null //created password reset token
     }
 
-    def "replace and send reset password token if already exist one successful"() {
+    def "replace and send reset password token if already one exist successful"() {
         given:
         def email = "d_fresh_default@gmail.com"
         def clientUrl = "clientUrl"

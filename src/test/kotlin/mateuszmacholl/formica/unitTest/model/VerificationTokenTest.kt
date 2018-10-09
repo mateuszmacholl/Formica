@@ -1,17 +1,17 @@
 package mateuszmacholl.formica.unitTest.model
 
-import mateuszmacholl.formica.model.token.PasswordResetToken
+import mateuszmacholl.formica.model.token.VerificationToken
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.*
 
-internal class CorrectPasswordResetTokenTest {
-    private lateinit var passwordResetToken: PasswordResetToken
+internal class VerificationTokenTest {
+    private lateinit var verificationToken: VerificationToken
 
     @BeforeEach
     fun init() {
-        passwordResetToken = PasswordResetToken()
+        verificationToken = VerificationToken()
     }
 
     private fun getActualDateEditedByMinutes(minutes: Int): Date {
@@ -22,18 +22,18 @@ internal class CorrectPasswordResetTokenTest {
 
     @Test
     fun isExpired_true() {
-        passwordResetToken.expirationDate = getActualDateEditedByMinutes(-1)
-        assertTrue(passwordResetToken.hasExpired())
+        verificationToken.expirationDate = getActualDateEditedByMinutes(-1)
+        assertTrue(verificationToken.hasExpired())
     }
 
     @Test
     fun isExpired_false() {
-        passwordResetToken.expirationDate = getActualDateEditedByMinutes(1)
-        assertFalse(passwordResetToken.hasExpired())
+        verificationToken.expirationDate = getActualDateEditedByMinutes(1)
+        assertFalse(verificationToken.hasExpired())
     }
 
     @Test
     fun hasSetExpirationDate() {
-        assertNotNull(passwordResetToken.expirationDate)
+        assertNotNull(verificationToken.expirationDate)
     }
 }

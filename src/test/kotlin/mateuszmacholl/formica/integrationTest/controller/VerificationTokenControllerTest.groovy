@@ -58,7 +58,7 @@ class VerificationTokenControllerTest extends Specification {
     def "add verification token"() {
         given:
         def token = "token123456789"
-        def user = 1000
+        def user = "d_enabled_user"
         def body = [
                 token: token,
                 user : user,
@@ -73,7 +73,7 @@ class VerificationTokenControllerTest extends Specification {
         verificationTokens.stream().filter { verificationToken ->
             (
                     verificationToken.token == token
-                            && verificationToken.user.id == user
+                            && verificationToken.user.username == user
             )
         } != Optional.empty()
     }
