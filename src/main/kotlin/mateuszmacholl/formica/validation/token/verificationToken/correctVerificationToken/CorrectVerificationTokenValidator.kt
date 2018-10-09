@@ -31,7 +31,7 @@ class CorrectVerificationTokenValidator : ConstraintValidator<CorrectVerificatio
                     .addConstraintViolation()
             return false
         }
-        if (verificationToken.user!!.enabled!!) {
+        if (verificationToken.user!!.enabled) {
             context.buildConstraintViolationWithTemplate("already enabled")
                     .addConstraintViolation()
             return false
