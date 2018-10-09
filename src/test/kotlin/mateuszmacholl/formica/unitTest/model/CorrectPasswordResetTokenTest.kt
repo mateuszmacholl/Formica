@@ -1,6 +1,6 @@
 package mateuszmacholl.formica.unitTest.model
 
-import mateuszmacholl.formica.model.user.PasswordResetToken
+import mateuszmacholl.formica.model.token.PasswordResetToken
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

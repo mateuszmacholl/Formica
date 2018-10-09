@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.verificationToken.existVerificationTokenWithId
+package mateuszmacholl.formica.validation.token.verificationToken.existVerificationTokenWithId
 
 import mateuszmacholl.formica.service.token.VerificationTokenService
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.converter.user
 
 import mateuszmacholl.formica.dto.user.passwordResetToken.CreatePasswordResetTokenDto
-import mateuszmacholl.formica.model.user.PasswordResetToken
+import mateuszmacholl.formica.model.token.PasswordResetToken
 import mateuszmacholl.formica.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -16,7 +16,7 @@ class PasswordResetTokenConverter {
         if (!user.isPresent) {
             throw IllegalArgumentException()
         }
-        return PasswordResetToken( token = createPasswordResetTokenDto.token, user = user.get())
+        return PasswordResetToken(token = createPasswordResetTokenDto.token, user = user.get())
     }
 
 }

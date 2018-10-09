@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.converter.user
 
 import mateuszmacholl.formica.dto.user.verificationToken.CreateVerificationTokenDto
-import mateuszmacholl.formica.model.user.VerificationToken
+import mateuszmacholl.formica.model.token.VerificationToken
 import mateuszmacholl.formica.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

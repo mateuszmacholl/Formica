@@ -1,6 +1,6 @@
 package mateuszmacholl.formica.repo
 
-import mateuszmacholl.formica.model.user.VerificationToken
+import mateuszmacholl.formica.model.token.VerificationToken
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 

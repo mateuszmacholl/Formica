@@ -1,8 +1,8 @@
 package mateuszmacholl.formica.integrationTest.controller
 
-import mateuszmacholl.formica.model.user.PasswordResetToken
+import mateuszmacholl.formica.model.token.PasswordResetToken
 import mateuszmacholl.formica.model.user.User
-import mateuszmacholl.formica.model.user.VerificationToken
+import mateuszmacholl.formica.model.token.VerificationToken
 import mateuszmacholl.formica.service.token.VerificationTokenService
 import mateuszmacholl.formica.service.user.UserService
 import mateuszmacholl.formica.service.token.PasswordResetTokenService

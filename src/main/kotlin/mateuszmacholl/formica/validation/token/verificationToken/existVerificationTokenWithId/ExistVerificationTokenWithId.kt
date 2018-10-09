@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.verificationToken.existVerificationTokenWithId
+package mateuszmacholl.formica.validation.token.verificationToken.existVerificationTokenWithId
 
 import javax.validation.Constraint
 import javax.validation.Payload

@@ -1,6 +1,6 @@
 package mateuszmacholl.formica.specification
 
-import mateuszmacholl.formica.model.user.VerificationToken
+import mateuszmacholl.formica.model.token.VerificationToken
 import net.kaczmarzyk.spring.data.jpa.domain.Equal
 import net.kaczmarzyk.spring.data.jpa.domain.GreaterThan
 import net.kaczmarzyk.spring.data.jpa.domain.Like

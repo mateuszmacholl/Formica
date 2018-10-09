@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.validation.user.existAccountWithId
 
 import mateuszmacholl.formica.service.token.PasswordResetTokenService
-import mateuszmacholl.formica.validation.verificationToken.existVerificationTokenWithId.ExistVerificationTokenWithId
+import mateuszmacholl.formica.validation.token.verificationToken.existVerificationTokenWithId.ExistVerificationTokenWithId
 import org.springframework.beans.factory.annotation.Autowired
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext

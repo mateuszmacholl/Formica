@@ -1,13 +1,13 @@
-package mateuszmacholl.formica.model.user
+package mateuszmacholl.formica.model.token
 
+import mateuszmacholl.formica.model.user.User
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.Parameter
 import java.util.*
 import javax.persistence.*
 
-
-@Entity
-data class PasswordResetToken(
+@MappedSuperclass
+abstract class Token(
         var token: String? = null,
 
         @OneToOne

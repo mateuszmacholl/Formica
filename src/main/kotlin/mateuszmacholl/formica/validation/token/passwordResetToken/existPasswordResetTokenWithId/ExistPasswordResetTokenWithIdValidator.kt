@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.passwordResetToken.existPasswordResetTokenWithId
+package mateuszmacholl.formica.validation.token.passwordResetToken.existPasswordResetTokenWithId
 
 import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import org.springframework.beans.factory.annotation.Autowired

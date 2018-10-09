@@ -11,9 +11,9 @@ import mateuszmacholl.formica.service.user.email.EmailSendingServiceContext
 import mateuszmacholl.formica.service.user.email.ResetPasswordEmailSendingService
 import mateuszmacholl.formica.service.user.email.VerificationEmailSendingService
 import mateuszmacholl.formica.specification.UserSpec
-import mateuszmacholl.formica.validation.passwordResetToken.correctPasswordResetToken.CorrectPasswordResetToken
+import mateuszmacholl.formica.validation.token.passwordResetToken.correctPasswordResetToken.CorrectPasswordResetToken
+import mateuszmacholl.formica.validation.token.verificationToken.correctVerificationToken.CorrectVerificationToken
 import mateuszmacholl.formica.validation.user.existAccountWithEmail.ExistAccountWithEmail
-import mateuszmacholl.formica.validation.verificationToken.correctVerificationToken.CorrectVerificationToken
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus

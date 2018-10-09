@@ -3,6 +3,8 @@ package mateuszmacholl.formica.model.user
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import mateuszmacholl.formica.model.post.Post
+import mateuszmacholl.formica.model.token.PasswordResetToken
+import mateuszmacholl.formica.model.token.VerificationToken
 import org.springframework.format.annotation.DateTimeFormat
 import java.util.*
 import javax.persistence.*

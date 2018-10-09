@@ -1,6 +1,6 @@
 package mateuszmacholl.formica.validation.user.existAccountWithId
 
-import mateuszmacholl.formica.validation.verificationToken.existVerificationTokenWithId.ExistVerificationTokenWithIdValidator
+import mateuszmacholl.formica.validation.token.verificationToken.existVerificationTokenWithId.ExistVerificationTokenWithIdValidator
 import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass

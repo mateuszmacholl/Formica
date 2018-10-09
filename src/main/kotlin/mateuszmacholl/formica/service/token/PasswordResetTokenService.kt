@@ -1,6 +1,6 @@
 package mateuszmacholl.formica.service.token
 
-import mateuszmacholl.formica.model.user.PasswordResetToken
+import mateuszmacholl.formica.model.token.PasswordResetToken
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.repo.PasswordResetTokenRepo
 import mateuszmacholl.formica.specification.PasswordResetTokenSpec
@@ -18,7 +18,7 @@ class PasswordResetTokenService {
         return passwordResetTokenRepo.findByToken(token)
     }
 
-    fun add(passwordResetToken: PasswordResetToken): PasswordResetToken{
+    fun add(passwordResetToken: PasswordResetToken): PasswordResetToken {
         val id = passwordResetToken.user!!.id
         if(passwordResetTokenRepo.findById(id!!).isPresent){
             deleteById(id)
@@ -50,7 +50,7 @@ class PasswordResetTokenService {
         return passwordResetTokenRepo.findById(id)
     }
 
-    fun generateToken(user: User): PasswordResetToken{
+    fun generateToken(user: User): PasswordResetToken {
         val token = UUID.randomUUID().toString()
         val passwordResetToken = PasswordResetToken(token = token, user = user)
         return add(passwordResetToken)

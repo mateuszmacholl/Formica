@@ -1,6 +1,6 @@
 package mateuszmacholl.formica.integrationTest.controller
 
-import mateuszmacholl.formica.model.user.PasswordResetToken
+import mateuszmacholl.formica.model.token.PasswordResetToken
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import org.springframework.beans.factory.annotation.Autowired
