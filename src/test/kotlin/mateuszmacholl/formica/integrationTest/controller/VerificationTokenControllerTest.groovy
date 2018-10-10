@@ -24,9 +24,11 @@ class VerificationTokenControllerTest extends Specification {
     @Autowired
     private TestRestTemplate restTemplate
 
+    private String path = "/verification-tokens/"
+
     def "get all verification tokens"() {
         when:
-        def response = restTemplate.getForEntity('/verification-tokens', String.class)
+        def response = restTemplate.getForEntity(path, String.class)
 
         then:
         HttpStatus.OK == response.statusCode
@@ -36,7 +38,7 @@ class VerificationTokenControllerTest extends Specification {
         given:
         def id = 1000
         when:
-        def response = restTemplate.getForEntity('/verification-tokens/' + id, VerificationToken.class)
+        def response = restTemplate.getForEntity(path + id, VerificationToken.class)
 
         then:
         HttpStatus.OK == response.statusCode
@@ -46,7 +48,7 @@ class VerificationTokenControllerTest extends Specification {
         given:
         def id = 1000
         when:
-        def response = restTemplate.exchange('/verification-tokens/' + id, HttpMethod.DELETE, null, String.class)
+        def response = restTemplate.exchange(path + id, HttpMethod.DELETE, null, String.class)
 
         then:
         HttpStatus.NO_CONTENT == response.statusCode
@@ -64,7 +66,7 @@ class VerificationTokenControllerTest extends Specification {
                 user : user,
         ]
         when:
-        def response = restTemplate.postForEntity('/verification-tokens', body, String.class)
+        def response = restTemplate.postForEntity(path, body, String.class)
 
         then:
         HttpStatus.CREATED == response.statusCode
@@ -82,7 +84,7 @@ class VerificationTokenControllerTest extends Specification {
         given:
         def id = 1000
         when:
-        def response = restTemplate.getForEntity('/verification-tokens/' + id + '/users', User.class)
+        def response = restTemplate.getForEntity(path + id + '/users', User.class)
         then:
         HttpStatus.OK == response.statusCode
         response.body != null

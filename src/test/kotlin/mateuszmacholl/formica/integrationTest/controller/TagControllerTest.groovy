@@ -24,9 +24,11 @@ class TagControllerTest extends Specification {
     @Autowired
     private TestRestTemplate restTemplate
 
+    private String path = "/tags/"
+
     def "get all tags"() {
         when:
-        def response = restTemplate.getForEntity('/tags', String.class)
+        def response = restTemplate.getForEntity(path, String.class)
 
         then:
         HttpStatus.OK == response.statusCode
@@ -36,7 +38,7 @@ class TagControllerTest extends Specification {
         given:
         def id = 1001
         when:
-        def response = restTemplate.getForEntity('/tags/' + id, Tag.class)
+        def response = restTemplate.getForEntity(path + id, Tag.class)
 
         then:
         HttpStatus.OK == response.statusCode
@@ -46,7 +48,7 @@ class TagControllerTest extends Specification {
         given:
         def id = 1001
         when:
-        def response = restTemplate.exchange('/tags/' + id, HttpMethod.DELETE, null, String.class)
+        def response = restTemplate.exchange(path + id, HttpMethod.DELETE, null, String.class)
 
         then:
         HttpStatus.NO_CONTENT == response.statusCode
@@ -62,7 +64,7 @@ class TagControllerTest extends Specification {
                 name: name
         ]
         when:
-        def response = restTemplate.postForEntity('/tags', body, String.class)
+        def response = restTemplate.postForEntity(path, body, String.class)
 
         then:
         HttpStatus.CREATED == response.statusCode
@@ -79,7 +81,7 @@ class TagControllerTest extends Specification {
         given:
         def id = 1000
         when:
-        def response = restTemplate.getForEntity('/tags/' + id + '/posts', Post[].class)
+        def response = restTemplate.getForEntity(path + id + '/posts', Post[].class)
         then:
         HttpStatus.OK == response.statusCode
         response.body != null

@@ -1,5 +1,6 @@
 package mateuszmacholl.formica.integrationTest.controller
 
+import mateuszmacholl.formica.model.post.Post
 import mateuszmacholl.formica.model.token.PasswordResetToken
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.model.token.VerificationToken
@@ -32,9 +33,11 @@ class UserControllerTest extends Specification {
     @Autowired
     private TestRestTemplate restTemplate
 
+    private String path = "/users/"
+
     def "get all users"() {
         when:
-        def response = restTemplate.getForEntity('/users', String.class)
+        def response = restTemplate.getForEntity(path, String.class)
 
         then:
         HttpStatus.OK == response.statusCode
@@ -44,7 +47,7 @@ class UserControllerTest extends Specification {
         given:
         def id = 1001
         when:
-        def response = restTemplate.getForEntity('/users/' + id, User.class)
+        def response = restTemplate.getForEntity(path + id, User.class)
 
         then:
         HttpStatus.OK == response.statusCode
@@ -65,7 +68,7 @@ class UserControllerTest extends Specification {
         ]
 
         when:
-        def response = restTemplate.postForEntity('/users', body, String.class)
+        def response = restTemplate.postForEntity(path, body, String.class)
 
         then:
         HttpStatus.CREATED == response.statusCode
@@ -83,7 +86,7 @@ class UserControllerTest extends Specification {
         given:
         def id = 1000
         when:
-        def response = restTemplate.exchange('/users/' + id, HttpMethod.DELETE, null, String.class)
+        def response = restTemplate.exchange(path + id, HttpMethod.DELETE, null, String.class)
 
         then:
         HttpStatus.NO_CONTENT == response.statusCode
@@ -96,7 +99,7 @@ class UserControllerTest extends Specification {
         given:
         def id = 1000
         when:
-        def response = restTemplate.getForEntity('/users/' + id + '/verification-tokens', VerificationToken.class)
+        def response = restTemplate.getForEntity(path + id + '/verification-tokens', VerificationToken.class)
         then:
         HttpStatus.OK == response.statusCode
         response.body != null
@@ -106,7 +109,7 @@ class UserControllerTest extends Specification {
         given:
         def id = 1001
         when:
-        def response = restTemplate.getForEntity('/users/' + id + '/password-reset-tokens', PasswordResetToken.class)
+        def response = restTemplate.getForEntity(path + id + '/password-reset-tokens', PasswordResetToken.class)
         then:
         HttpStatus.OK == response.statusCode
         response.body != null
@@ -117,7 +120,7 @@ class UserControllerTest extends Specification {
         def token = "token12345"
 
         when:
-        def response = restTemplate.exchange('/users/enabled?token=' + token, HttpMethod.PUT, null, String.class)
+        def response = restTemplate.exchange(path + 'enabled?token=' + token, HttpMethod.PUT, null, String.class)
 
         then:
         HttpStatus.NO_CONTENT == response.statusCode
@@ -133,7 +136,7 @@ class UserControllerTest extends Specification {
         def clientUrl = "clientUrl"
 
         when:
-        def response = restTemplate.postForEntity('/users/verification-tokens?' +
+        def response = restTemplate.postForEntity(path + 'verification-tokens?' +
                 'email=' + email +
                 '&url=' + clientUrl,
                 null,
@@ -151,7 +154,7 @@ class UserControllerTest extends Specification {
         verificationTokenService.add(oldToken)
 
         when:
-        def response = restTemplate.postForEntity('/users/verification-tokens?' +
+        def response = restTemplate.postForEntity(path + 'verification-tokens?' +
                 'email=' + email +
                 '&url=' + clientUrl,
                 null,
@@ -171,7 +174,7 @@ class UserControllerTest extends Specification {
         def clientUrl = "clientUrl"
 
         when:
-        def response = restTemplate.postForEntity('/users/password-reset-tokens?' +
+        def response = restTemplate.postForEntity(path + 'password-reset-tokens?' +
                 'email=' + email +
                 '&url=' + clientUrl,
                 null,
@@ -192,7 +195,7 @@ class UserControllerTest extends Specification {
         passwordResetTokenService.add(oldToken)
 
         when:
-        def response = restTemplate.postForEntity('/users/password-reset-tokens?' +
+        def response = restTemplate.postForEntity(path + 'password-reset-tokens?' +
                 'email=' + email +
                 '&url=' + clientUrl,
                 null,
@@ -217,11 +220,21 @@ class UserControllerTest extends Specification {
         ]
 
         when:
-        def response = restTemplate.exchange('/users/password?token=' + token, HttpMethod.PUT, new HttpEntity(body), String.class)
+        def response = restTemplate.exchange(path + 'password?token=' + token, HttpMethod.PUT, new HttpEntity(body), String.class)
 
         then:
         HttpStatus.NO_CONTENT == response.statusCode
         oldPassword != newPassword // changed password
         passwordResetTokenService.findByToken(token) == null // deleted password reset token
+    }
+
+    def "get posts"(){
+        given:
+        def id = 1000
+        when:
+        def response = restTemplate.getForEntity(path + id + '/posts', Post[].class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
     }
 }

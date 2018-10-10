@@ -148,4 +148,15 @@ class UserController {
         return ResponseEntity<Any>(HttpStatus.NO_CONTENT)
     }
 
+    @RequestMapping(value = ["/{id}/posts"], method = [RequestMethod.GET])
+    fun getPosts(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val user = userService.findById(id)
+        return if (!user.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val posts = user.get().posts
+            ResponseEntity<Any>(posts, HttpStatus.OK )
+        }
+    }
+
 }

@@ -23,9 +23,11 @@ class PostControllerTest extends Specification {
     @Autowired
     private TestRestTemplate restTemplate
 
+    private String path = "/posts/"
+
     def "get all posts"() {
         when:
-        def response = restTemplate.getForEntity('/posts', String.class)
+        def response = restTemplate.getForEntity(path, String.class)
 
         then:
         HttpStatus.OK == response.statusCode
@@ -35,7 +37,7 @@ class PostControllerTest extends Specification {
         given:
         def id = 1001
         when:
-        def response = restTemplate.getForEntity('/posts/' + id, Post.class)
+        def response = restTemplate.getForEntity(path + id, Post.class)
 
         then:
         HttpStatus.OK == response.statusCode
@@ -45,7 +47,7 @@ class PostControllerTest extends Specification {
         given:
         def id = 1001
         when:
-        def response = restTemplate.exchange('/posts/' + id, HttpMethod.DELETE, null, String.class)
+        def response = restTemplate.exchange(path + id, HttpMethod.DELETE, null, String.class)
 
         then:
         HttpStatus.NO_CONTENT == response.statusCode
@@ -65,7 +67,7 @@ class PostControllerTest extends Specification {
                 author: author
         ]
         when:
-        def response = restTemplate.postForEntity('/posts', body, String.class)
+        def response = restTemplate.postForEntity(path, body, String.class)
 
         then:
         HttpStatus.CREATED == response.statusCode
