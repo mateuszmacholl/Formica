@@ -32,3 +32,10 @@ INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1001);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1003,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1003,1003);
+
+INSERT INTO comment(id, creation_date, content, votes, author_id, post_id)
+VALUES (1000,'2118-09-01 12:00:00', 'content1000', 100, 1000, 1000);
+INSERT INTO comment(id, creation_date, content, votes, author_id, post_id)
+VALUES (1001,'2118-09-01 12:00:00', 'content1002', 100, 1000, 1001);
+INSERT INTO comment(id, creation_date, content, votes, author_id, post_id)
+VALUES (1002,'2118-09-01 12:00:00', 'content1003', 100, 1001, 1002);

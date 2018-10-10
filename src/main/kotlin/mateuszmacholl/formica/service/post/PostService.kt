@@ -3,14 +3,13 @@ package mateuszmacholl.formica.service.post
 import mateuszmacholl.formica.model.post.Post
 import mateuszmacholl.formica.repo.PostRepo
 import mateuszmacholl.formica.specification.PostSpec
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class PostService
-constructor(private val postRepo: PostRepo){
+constructor(private val postRepo: PostRepo) {
     fun findById(id: Int): Optional<Post> {
         return postRepo.findById(id)
     }

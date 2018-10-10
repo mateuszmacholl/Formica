@@ -53,4 +53,15 @@ class PostController {
             ResponseEntity<Any>(HttpStatus.NO_CONTENT )
         }
     }
+
+    @RequestMapping(value = ["/{id}/comments"], method = [RequestMethod.GET])
+    fun getComments(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val post = postService.findById(id)
+        return if (!post.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val comments = post.get().comments
+            ResponseEntity<Any>(comments, HttpStatus.OK )
+        }
+    }
 }

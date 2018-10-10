@@ -1,5 +1,7 @@
 package mateuszmacholl.formica.model.post
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import mateuszmacholl.formica.model.comment.Comment
 import mateuszmacholl.formica.model.tag.Tag
 import mateuszmacholl.formica.model.user.User
 import org.springframework.format.annotation.DateTimeFormat
@@ -24,6 +26,9 @@ data class Post(
             inverseJoinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")],
             joinColumns = [JoinColumn(name = "tag_id", referencedColumnName = "id")])
     var tags: Set<Tag> = mutableSetOf()
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Comment::class)
+    var comments: Set<Comment> = mutableSetOf()
     var solved: Boolean = false
     var votes: Int = 0
 
