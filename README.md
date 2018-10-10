@@ -9,22 +9,27 @@
     - /password [PUT]
     - /password-reset-tokens [POST]
     - /verification-tokens [POST]
-    <br>
+
+    
   - /comments [GET] [POST] 
     - /{id} [GET] [DELETE]
-  <br>
-  - /password-reset-tokens [GET] [POST]
-    - /{id} [GET] [DELETE]
-        - /users [GET]
-  <br>
-  - /verification-tokens [GET] [POST]
-    - /{id} [GET] [DELETE]
-        - /users [GET]
-  <br>
-  - /posts [GET] [POST]
-    - /{id} [GET] [DELETE]
-        - /comments [GET]
-  <br>
-  - /tags [GET] [POST]
-    - /{id} [GET] [DELETE]
-        - /tasks [GET]
+
+
+- /password-reset-tokens [GET] [POST]
+  - /{id} [GET] [DELETE]
+      - /users [GET]
+
+
+- /verification-tokens [GET] [POST]
+  - /{id} [GET] [DELETE]
+      - /users [GET]
+
+
+- /posts [GET] [POST]
+  - /{id} [GET] [DELETE]
+      - /comments [GET]
+    
+      
+- /tags [GET] [POST]
+  - /{id} [GET] [DELETE]
+      - /tasks [GET]
