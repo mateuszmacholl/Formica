@@ -23,3 +23,4 @@
   - /tags [GET] [POST]
       - /{id} [GET] [DELETE]
           - /tasks [GET]
+  - /auth/login [POST]
