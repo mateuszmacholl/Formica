@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class PostService @Autowired
+class PostService
 constructor(private val postRepo: PostRepo){
     fun findById(id: Int): Optional<Post> {
         return postRepo.findById(id)

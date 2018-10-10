@@ -24,8 +24,7 @@ class PasswordResetTokenConverterTest {
     @BeforeEach
     fun init() {
         userService = mock(UserService::class.java)
-        passwordResetTokenConverter = PasswordResetTokenConverter()
-        passwordResetTokenConverter.userService = userService
+        passwordResetTokenConverter = PasswordResetTokenConverter(userService)
         `when`(passwordResetTokenConverter.userService.findByUsername(username)).thenReturn(user)
     }
 

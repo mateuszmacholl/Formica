@@ -22,8 +22,7 @@ class PostConverterTest {
     @BeforeEach
     fun init() {
         userService = Mockito.mock(UserService::class.java)
-        postConverter = PostConverter()
-        postConverter.userService = userService
+        postConverter = PostConverter(userService)
         Mockito.`when`(postConverter.userService.findByUsername(author)).thenReturn(user)
     }
 

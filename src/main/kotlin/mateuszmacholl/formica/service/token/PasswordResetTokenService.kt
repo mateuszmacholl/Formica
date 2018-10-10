@@ -4,23 +4,19 @@ import mateuszmacholl.formica.model.token.PasswordResetToken
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.repo.PasswordResetTokenRepo
 import mateuszmacholl.formica.specification.PasswordResetTokenSpec
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class PasswordResetTokenService {
-    @Autowired
-    lateinit var passwordResetTokenRepo: PasswordResetTokenRepo
-
+class PasswordResetTokenService(private val passwordResetTokenRepo: PasswordResetTokenRepo) {
     fun findByToken(token: String): PasswordResetToken? {
         return passwordResetTokenRepo.findByToken(token)
     }
 
     fun add(passwordResetToken: PasswordResetToken): PasswordResetToken {
         val id = passwordResetToken.user!!.id
-        if(passwordResetTokenRepo.findById(id!!).isPresent){
+        if (passwordResetTokenRepo.findById(id!!).isPresent) {
             deleteById(id)
         }
         return passwordResetTokenRepo.save(passwordResetToken)
@@ -34,15 +30,15 @@ class PasswordResetTokenService {
         }
     }
 
-    fun deleteById(id: Int){
+    fun deleteById(id: Int) {
         passwordResetTokenRepo.deleteById(id)
     }
 
-    fun findAll(passwordResetTokenSpec: PasswordResetTokenSpec, pageable: Pageable) : MutableIterable<PasswordResetToken> {
+    fun findAll(passwordResetTokenSpec: PasswordResetTokenSpec, pageable: Pageable): MutableIterable<PasswordResetToken> {
         return passwordResetTokenRepo.findAll(passwordResetTokenSpec, pageable)
     }
 
-    fun delete(passwordResetToken: PasswordResetToken){
+    fun delete(passwordResetToken: PasswordResetToken) {
         passwordResetTokenRepo.delete(passwordResetToken)
     }
 

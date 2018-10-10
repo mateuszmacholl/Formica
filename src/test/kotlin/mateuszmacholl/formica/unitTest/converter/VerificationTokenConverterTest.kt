@@ -24,8 +24,7 @@ class VerificationTokenConverterTest {
     @BeforeEach
     fun init() {
         userService = mock(UserService::class.java)
-        verificationTokenConverter = VerificationTokenConverter()
-        verificationTokenConverter.userService = userService
+        verificationTokenConverter = VerificationTokenConverter(userService)
         `when`(verificationTokenConverter.userService.findByUsername(username)).thenReturn(user)
     }
 

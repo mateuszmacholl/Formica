@@ -20,8 +20,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.*
 import javax.validation.ConstraintViolationException
 
+
 @ControllerAdvice
 class CustomRestExceptionHandler : ResponseEntityExceptionHandler() {
+
+
 
     override fun handleMethodArgumentNotValid(ex: MethodArgumentNotValidException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
         val apiError = createValidationError(ex)
@@ -83,7 +86,7 @@ class CustomRestExceptionHandler : ResponseEntityExceptionHandler() {
         val apiError = ApiError(HttpStatus.BAD_REQUEST, "", errors)
         return ResponseEntity(apiError, HttpHeaders(), apiError.status!!)
     }
-
+    
     override fun handleNoHandlerFoundException(ex: NoHandlerFoundException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
         val error = "No handler found for " + ex.httpMethod + " " + ex.requestURL
 

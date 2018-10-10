@@ -1,18 +1,15 @@
 package mateuszmacholl.formica.service.token
 
-import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.model.token.VerificationToken
+import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.repo.VerificationTokenRepo
 import mateuszmacholl.formica.specification.VerificationTokenSpec
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class VerificationTokenService {
-    @Autowired
-    lateinit var verificationTokenRepo: VerificationTokenRepo
+class VerificationTokenService(private val verificationTokenRepo: VerificationTokenRepo) {
 
     fun findByToken(token: String): VerificationToken? {
         return verificationTokenRepo.findByToken(token)

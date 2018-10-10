@@ -3,13 +3,12 @@ package mateuszmacholl.formica.service.user
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.repo.UserRepo
 import mateuszmacholl.formica.specification.UserSpec
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UserService @Autowired
+class UserService
 constructor(private val userRepo: UserRepo, private val passwordEncoderService: PasswordEncoderService) {
 
     fun findById(id: Int): Optional<User> {

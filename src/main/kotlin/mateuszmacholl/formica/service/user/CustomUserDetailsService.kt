@@ -3,7 +3,6 @@ package mateuszmacholl.formica.service.user
 
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.repo.UserRepo
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -15,7 +14,7 @@ import java.util.*
 
 @Service
 @Transactional
-class CustomUserDetailsService @Autowired
+class CustomUserDetailsService
 constructor(private val userRepo: UserRepo) : UserDetailsService {
 
     @Throws(UsernameNotFoundException::class)
