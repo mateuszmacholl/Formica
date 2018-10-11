@@ -12,8 +12,8 @@ class ExistVerificationTokenWithIdValidator : ConstraintValidator<ExistVerificat
 
     override fun initialize(constraint: ExistVerificationTokenWithId) {}
 
-    override fun isValid(id: Int?, context: ConstraintValidatorContext): Boolean {
-        return id != null && verificationTokenService.findById(id).isPresent
+    override fun isValid(id: Int, context: ConstraintValidatorContext): Boolean {
+        return verificationTokenService.findById(id).isPresent
     }
 
 }

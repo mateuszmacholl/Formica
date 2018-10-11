@@ -12,9 +12,9 @@ class UniqueUsernameValidator : ConstraintValidator<UniqueUsername, String> {
 
     override fun initialize(constraint: UniqueUsername) {}
 
-    override fun isValid(username: String?, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(username: String, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
-        if (username == null || userService.findByUsername(username) != null) {
+        if (userService.findByUsername(username) != null) {
             context.buildConstraintViolationWithTemplate("must be unique")
                     .addConstraintViolation()
             return false

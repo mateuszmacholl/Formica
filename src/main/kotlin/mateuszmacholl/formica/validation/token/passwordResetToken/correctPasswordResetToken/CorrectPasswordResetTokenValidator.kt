@@ -12,13 +12,8 @@ class CorrectPasswordResetTokenValidator : ConstraintValidator<CorrectPasswordRe
 
     override fun initialize(constraint: CorrectPasswordResetToken) {}
 
-    override fun isValid(token: String?, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(token: String, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
-        if(token == null) {
-            context.buildConstraintViolationWithTemplate("can't be null")
-                    .addConstraintViolation()
-            return false
-        }
         val passwordResetToken = passwordResetTokenService!!.findByToken(token)
 
         if (passwordResetToken == null) {

@@ -11,7 +11,7 @@ class ExistAccountWithIdValidator : ConstraintValidator<ExistAccountWithId, Int>
 
     override fun initialize(constraint: ExistAccountWithId) {}
 
-    override fun isValid(id: Int?, context: ConstraintValidatorContext): Boolean {
-        return id != null && postService.findById(id).isPresent
+    override fun isValid(id: Int, context: ConstraintValidatorContext): Boolean {
+        return postService.findById(id).isPresent
     }
 }

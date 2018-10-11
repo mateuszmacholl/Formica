@@ -12,10 +12,10 @@ class ExistAccountWithUsernameValidator : ConstraintValidator<ExistAccountWithUs
 
     override fun initialize(constraint: ExistAccountWithUsername) {}
 
-    override fun isValid(username: String?, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(username: String, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
 
-        if (username == null || userService.findByUsername(username) == null) {
+        if (userService.findByUsername(username) == null) {
             context.buildConstraintViolationWithTemplate("no account with such username")
                     .addConstraintViolation()
             return false

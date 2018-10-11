@@ -12,8 +12,8 @@ class ExistPasswordResetTokenWithIdValidator : ConstraintValidator<ExistPassword
 
     override fun initialize(constraint: ExistPasswordResetTokenWithId) {}
 
-    override fun isValid(id: Int?, context: ConstraintValidatorContext): Boolean {
-        return id != null && passwordResetTokenService.findById(id).isPresent
+    override fun isValid(id: Int, context: ConstraintValidatorContext): Boolean {
+        return passwordResetTokenService.findById(id).isPresent
     }
 
 }

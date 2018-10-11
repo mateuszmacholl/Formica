@@ -13,10 +13,10 @@ class ExistAccountWithEmailValidator : ConstraintValidator<ExistAccountWithEmail
 
     override fun initialize(constraint: ExistAccountWithEmail?) {}
 
-    override fun isValid(email: String?, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(email: String, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
 
-        if (email == null || !EmailPattern.isCorrect(email)) {
+        if (!EmailPattern.isCorrect(email)) {
             context.buildConstraintViolationWithTemplate("wrong pattern")
                     .addConstraintViolation()
             return false
