@@ -10,12 +10,12 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity
-class PostHasBeenCommentedNotification(
+class BestAnswerHasBeenChosenNotification(
         notifiedUser: User? = null,
         notifierUser: User? = null,
-        type: String = "post_has_been_commented",
+        type: String = "best_answer_has_been_chosen",
         @ManyToOne(fetch = FetchType.EAGER, targetEntity = Post::class)
         @OnDelete(action = OnDeleteAction.CASCADE)
         @JoinColumn(name = "post_id")
         var post: Post? = null
-) : Notification(notifiedUser,notifierUser, type)
+) : Notification(notifiedUser, notifierUser, type)

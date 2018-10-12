@@ -1,9 +1,9 @@
 package mateuszmacholl.formica.controller
 
-import mateuszmacholl.formica.converter.post.PostConverter
-import mateuszmacholl.formica.dto.post.CreatePostDto
-import mateuszmacholl.formica.service.post.PostService
-import mateuszmacholl.formica.specification.PostSpec
+import mateuszmacholl.formica.converter.answer.AnswerConverter
+import mateuszmacholl.formica.dto.answer.CreateAnswerDto
+import mateuszmacholl.formica.service.answer.AnswerService
+import mateuszmacholl.formica.specification.AnswerSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -13,55 +13,55 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @Validated
-@RequestMapping(value =  ["/posts"])
-class PostController {
+@RequestMapping(value =  ["/answers"])
+class AnswerController {
     @Autowired
-    lateinit var postService: PostService
+    lateinit var answerService: AnswerService
     @Autowired
-    lateinit var postConverter: PostConverter
+    lateinit var answerConverter: AnswerConverter
 
     @RequestMapping(value = [""], method = [RequestMethod.GET])
-    fun getAllBy(postSpec: PostSpec, pageable: Pageable): ResponseEntity<*> {
-        val posts = postService.findAll(postSpec, pageable)
-        return ResponseEntity(posts, HttpStatus.OK)
+    fun getAllBy(answerSpec: AnswerSpec, pageable: Pageable): ResponseEntity<*> {
+        val answers = answerService.findAll(answerSpec, pageable)
+        return ResponseEntity(answers, HttpStatus.OK)
     }
 
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
     fun getById(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
-        val post = postService.findById(id)
-        return if (!post.isPresent) {
+        val answer = answerService.findById(id)
+        return if (!answer.isPresent) {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
-            ResponseEntity(post.get(), HttpStatus.OK)
+            ResponseEntity(answer.get(), HttpStatus.OK)
         }
     }
 
     @RequestMapping(value = [""], method = [RequestMethod.POST])
-    fun add(@RequestBody @Validated createPostDto: CreatePostDto): ResponseEntity<*> {
-        val post = postConverter.toEntity(createPostDto)
-        postService.add(post)
+    fun add(@RequestBody @Validated createAnswerDto: CreateAnswerDto): ResponseEntity<*> {
+        val answer = answerConverter.toEntity(createAnswerDto)
+        answerService.add(answer)
         return ResponseEntity<Any>(HttpStatus.CREATED)
     }
 
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.DELETE])
     fun deleteById(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
-        val post = postService.findById(id)
-        return if (!post.isPresent) {
+        val answer = answerService.findById(id)
+        return if (!answer.isPresent) {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
-            postService.delete(post.get())
+            answerService.delete(answer.get())
             ResponseEntity<Any>(HttpStatus.NO_CONTENT )
         }
     }
 
-    @RequestMapping(value = ["/{id}/answers"], method = [RequestMethod.GET])
+    @RequestMapping(value = ["/{id}/comments"], method = [RequestMethod.GET])
     fun getComments(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
-        val post = postService.findById(id)
+        val post = answerService.findById(id)
         return if (!post.isPresent) {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
-            val answers = post.get().answers
-            ResponseEntity<Any>(answers, HttpStatus.OK )
+            val comments = post.get().comments
+            ResponseEntity<Any>(comments, HttpStatus.OK )
         }
     }
 }

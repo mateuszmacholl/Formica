@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.Specification
 
 @And(
         Spec(path = "author.username", spec = Like::class),
-        Spec(path = "post.title", spec = Like::class),
         Spec(path = "votes", spec = GreaterThan::class),
         Spec(path = "creationDate", spec = Equal::class)
 )

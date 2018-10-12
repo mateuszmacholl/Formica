@@ -1,6 +1,6 @@
 package mateuszmacholl.formica.integrationTest.controller
 
-import mateuszmacholl.formica.model.comment.Comment
+import mateuszmacholl.formica.model.answer.Answer
 import mateuszmacholl.formica.model.post.Post
 import mateuszmacholl.formica.model.token.PasswordResetToken
 import mateuszmacholl.formica.model.token.VerificationToken
@@ -239,11 +239,11 @@ class UserControllerTest extends Specification {
         response.body != null
     }
 
-    def "get comments"(){
+    def "get answers"(){
         given:
         def id = 1000
         when:
-        def response = restTemplate.getForEntity(path + id + '/comments', Comment[].class)
+        def response = restTemplate.getForEntity(path + id + '/answers', Answer[].class)
         then:
         HttpStatus.OK == response.statusCode
         response.body != null

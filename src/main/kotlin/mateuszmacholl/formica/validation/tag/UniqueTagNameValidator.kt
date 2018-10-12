@@ -12,9 +12,9 @@ class UniqueTagNameValidator : ConstraintValidator<UniqueTagName, String> {
 
     override fun initialize(constraint: UniqueTagName) {}
 
-    override fun isValid(name: String?, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(name: String, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
-        if (name == null || tagService.findByName(name) != null) {
+        if (tagService.findByName(name) != null) {
             context.buildConstraintViolationWithTemplate("must be unique")
                     .addConstraintViolation()
             return false

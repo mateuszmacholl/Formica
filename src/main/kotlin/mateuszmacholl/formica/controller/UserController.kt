@@ -170,6 +170,17 @@ class UserController {
         }
     }
 
+    @RequestMapping(value = ["/{id}/answers"], method = [RequestMethod.GET])
+    fun getAnswers(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val user = userService.findById(id)
+        return if (!user.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val answers = user.get().answers
+            ResponseEntity<Any>(answers, HttpStatus.OK )
+        }
+    }
+
     @RequestMapping(value = ["/{id}/notifications"], method = [RequestMethod.GET])
     fun getNotifications(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
         val user = userService.findById(id)

@@ -2,6 +2,7 @@ package mateuszmacholl.formica.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import mateuszmacholl.formica.model.answer.Answer
 import mateuszmacholl.formica.model.comment.Comment
 import mateuszmacholl.formica.model.notification.Notification
 import mateuszmacholl.formica.model.post.Post
@@ -49,8 +50,14 @@ data class User(
     var comments: Set<Comment> = mutableSetOf()
 
     @JsonIgnore
+    @OneToMany(mappedBy = "author", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Answer::class)
+    var answers: Set<Answer> = mutableSetOf()
+
+    @JsonIgnore
     @OneToMany(mappedBy = "notifiedUser", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Notification::class)
     var notifications: MutableSet<Notification> = mutableSetOf()
+
+
 
     init {
         roles.add("user")

@@ -1,10 +1,10 @@
-package mateuszmacholl.formica.dto.comment
+package mateuszmacholl.formica.dto.answer
 
-import mateuszmacholl.formica.validation.answer.ExistAnswerWithId
 import mateuszmacholl.formica.validation.filled.Filled
+import mateuszmacholl.formica.validation.post.ExistPostWithId
 import mateuszmacholl.formica.validation.user.existUserWithUsername.ExistAccountWithUsername
 
-data class CreateCommentDto(
+data class CreateAnswerDto(
         @field:Filled
         val content: String,
 
@@ -12,6 +12,6 @@ data class CreateCommentDto(
         @field:ExistAccountWithUsername
         val author: String,
 
-        @field:ExistAnswerWithId
-        val answer: Number
+        @field:ExistPostWithId
+        val post: Number
 )

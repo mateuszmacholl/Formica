@@ -60,11 +60,11 @@ class CommentControllerTest extends Specification {
         given:
         def content = "content"
         def author = "d_enabled_user"
-        def post = 1000
+        def answer = 1000
         def body = [
                 content: content,
                 author: author,
-                post: post
+                answer: answer
         ]
         when:
         def response = restTemplate.postForEntity(path, body, String.class)
@@ -77,7 +77,7 @@ class CommentControllerTest extends Specification {
             (
                     comment.content == content &&
                     comment.author.username == author &&
-                    comment.post.id == post
+                    comment.answer.id == answer
             )
         } != Optional.empty()
     }

@@ -33,20 +33,26 @@ INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1001);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1003,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1003,1003);
 
-INSERT INTO comment(id, creation_date, content, votes, author_id, post_id)
-VALUES (1000,'2118-09-01 12:00:00', 'content1000', 100, 1000, 1000);
-INSERT INTO comment(id, creation_date, content, votes, author_id, post_id)
-VALUES (1001,'2118-09-01 12:00:00', 'content1002', 100, 1000, 1001);
-INSERT INTO comment(id, creation_date, content, votes, author_id, post_id)
-VALUES (1002,'2118-09-01 12:00:00', 'content1003', 100, 1001, 1002);
+INSERT INTO answer(id, creation_date, content, votes, author_id, post_id, best)
+VALUES (1000,'2118-09-01 12:00:00', 'content1000', 100, 1000, 1000, false);
+INSERT INTO answer(id, creation_date, content, votes, author_id, post_id, best)
+VALUES (1001,'2118-09-01 12:00:00', 'content1002', 100, 1000, 1001, false);
+INSERT INTO answer(id, creation_date, content, votes, author_id, post_id, best)
+VALUES (1002,'2118-09-01 12:00:00', 'content1003', 100, 1001, 1002, true);
 
-insert into post_has_been_commented_notification(id, creation_date, seen, user_id, type)
-values (1000, '2108-09-01 12:00:00', false, 1000, 'post_has_been_commented');
-insert into post_has_been_commented_notification(id, creation_date, seen, user_id, type)
-values (1001, '2108-09-01 12:00:00', true, 1000, 'post_has_been_commented');
-insert into post_has_been_commented_notification(id, creation_date, seen, user_id, type)
-values (1002, '2108-09-01 12:00:00', true, 1001, 'post_has_been_commented');
-insert into post_has_been_commented_notification(id, creation_date, seen, user_id, type)
-values (1003, '2108-09-01 12:00:00', false, 1001, 'post_has_been_commented');
-insert into post_has_been_rated_notification(id, creation_date, seen, user_id, type)
-values (1004, '2108-09-01 12:00:00', false, 1001, 'post_has_been_rated');
+
+INSERT INTO comment(id, creation_date, content, author_id, answer_id)
+VALUES (1000,'2118-09-01 12:00:00', 'content1000', 1000, 1000);
+INSERT INTO comment(id, creation_date, content, author_id, answer_id)
+VALUES (1001,'2118-09-01 12:00:00', 'content1002', 1000, 1001);
+INSERT INTO comment(id, creation_date, content, author_id, answer_id)
+VALUES (1002,'2118-09-01 12:00:00', 'content1003', 1001, 1002);
+
+insert into post_has_been_commented_notification(id, creation_date, seen, notified_user_id, notifier_user_id, type, post_id)
+values (1001, '2108-09-01 12:00:00', false, 1000, 1001, 'post_has_been_commented', 1000);
+insert into post_has_been_commented_notification(id, creation_date, seen, notified_user_id, notifier_user_id, type, post_id)
+values (1002, '2108-09-01 12:00:00', false, 1000, 1001, 'post_has_been_commented', 1001);
+insert into post_has_been_commented_notification(id, creation_date, seen, notified_user_id, notifier_user_id, type, post_id)
+values (1003, '2108-09-01 12:00:00', false, 1001, 1000, 'post_has_been_commented', 1001);
+insert into best_answer_has_been_chosen_notification(id, creation_date, seen, notified_user_id, notifier_user_id, type, post_id)
+values (1000, '2108-09-01 12:00:00', false, 1001, 1000, 'best_answer_has_been_chosen', 1000);

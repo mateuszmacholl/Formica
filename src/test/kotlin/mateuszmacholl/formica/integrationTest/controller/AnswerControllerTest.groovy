@@ -1,8 +1,8 @@
 package mateuszmacholl.formica.integrationTest.controller
 
 import mateuszmacholl.formica.model.answer.Answer
-import mateuszmacholl.formica.model.post.Post
-import mateuszmacholl.formica.service.post.PostService
+import mateuszmacholl.formica.model.comment.Comment
+import mateuszmacholl.formica.service.answer.AnswerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -18,15 +18,15 @@ import spock.lang.Specification
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.ANY)
 @ActiveProfiles(value = ["test"])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class PostControllerTest extends Specification {
+class AnswerControllerTest extends Specification {
     @Autowired
-    PostService postService
+    AnswerService answerService
     @Autowired
     private TestRestTemplate restTemplate
 
-    private String path = "/posts/"
+    private String path = "/answers/"
 
-    def "get all posts"() {
+    def "get all answers"() {
         when:
         def response = restTemplate.getForEntity(path, String.class)
 
@@ -34,17 +34,17 @@ class PostControllerTest extends Specification {
         HttpStatus.OK == response.statusCode
     }
 
-    def "get post by id"() {
+    def "get answer by id"() {
         given:
         def id = 1001
         when:
-        def response = restTemplate.getForEntity(path + id, Post.class)
+        def response = restTemplate.getForEntity(path + id, Answer.class)
 
         then:
         HttpStatus.OK == response.statusCode
     }
 
-    def "delete post by id"() {
+    def "delete answer by id"() {
         given:
         def id = 1001
         when:
@@ -53,19 +53,19 @@ class PostControllerTest extends Specification {
         then:
         HttpStatus.NO_CONTENT == response.statusCode
 
-        def post = postService.findById(id)
-        post == Optional.empty()
+        def answer = answerService.findById(id)
+        answer == Optional.empty()
     }
 
-    def "add post"() {
+    def "add answer"() {
         given:
-        def title = "title"
         def content = "content"
         def author = "d_enabled_user"
+        def post = 1000
         def body = [
-                title: title,
                 content: content,
-                author: author
+                author: author,
+                post: post
         ]
         when:
         def response = restTemplate.postForEntity(path, body, String.class)
@@ -73,23 +73,24 @@ class PostControllerTest extends Specification {
         then:
         HttpStatus.CREATED == response.statusCode
 
-        def posts = postService.findAll() as ArrayList<Post>
-        posts.stream().filter { post ->
+        def answers = answerService.findAll() as ArrayList<Answer>
+        answers.stream().filter { answer ->
             (
-                    post.title == title &&
-                    post.content == content &&
-                    post.author.username == author
+                    answer.content == content &&
+                    answer.author.username == author &&
+                    answer.post.id == post
             )
         } != Optional.empty()
     }
 
-    def "get answers"(){
+    def "get comments"(){
         given:
         def id = 1000
         when:
-        def response = restTemplate.getForEntity(path + id + '/answers', Answer[].class)
+        def response = restTemplate.getForEntity(path + id + '/comments', Comment[].class)
         then:
         HttpStatus.OK == response.statusCode
         response.body != null
     }
+
 }

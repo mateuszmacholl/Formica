@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.model.post
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import mateuszmacholl.formica.model.comment.Comment
+import mateuszmacholl.formica.model.answer.Answer
 import mateuszmacholl.formica.model.tag.Tag
 import mateuszmacholl.formica.model.user.User
 import org.springframework.format.annotation.DateTimeFormat
@@ -27,9 +27,8 @@ data class Post(
             joinColumns = [JoinColumn(name = "tag_id", referencedColumnName = "id")])
     var tags: Set<Tag> = mutableSetOf()
     @JsonIgnore
-    @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Comment::class)
-    var comments: Set<Comment> = mutableSetOf()
+    @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Answer::class)
+    var answers: Set<Answer> = mutableSetOf()
     var solved: Boolean = false
     var votes: Int = 0
-
 }

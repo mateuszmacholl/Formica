@@ -6,11 +6,13 @@ import javax.persistence.*
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 abstract class Notification(
         @ManyToOne(fetch = FetchType.EAGER, targetEntity = User::class)
-        @JoinColumn(name = "user_id")
+        @JoinColumn(name = "notified_user_id")
         var notifiedUser: User? = null,
+        @ManyToOne(fetch = FetchType.EAGER, targetEntity = User::class)
+        @JoinColumn(name = "notifier_user_id")
+        var notifierUser: User? = null,
         val type: String
 ) {
     @Id
