@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.controller.user
+package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.post.PostConverter
 import mateuszmacholl.formica.dto.post.CreatePostDto

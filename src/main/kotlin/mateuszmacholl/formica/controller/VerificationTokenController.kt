@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.controller.user
+package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.token.VerificationTokenConverter
 import mateuszmacholl.formica.dto.token.verificationToken.CreateVerificationTokenDto

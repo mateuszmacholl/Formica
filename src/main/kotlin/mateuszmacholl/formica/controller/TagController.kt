@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.controller.user
+package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.tag.TagConverter
 import mateuszmacholl.formica.dto.tag.CreateTagDto

@@ -39,3 +39,14 @@ INSERT INTO comment(id, creation_date, content, votes, author_id, post_id)
 VALUES (1001,'2118-09-01 12:00:00', 'content1002', 100, 1000, 1001);
 INSERT INTO comment(id, creation_date, content, votes, author_id, post_id)
 VALUES (1002,'2118-09-01 12:00:00', 'content1003', 100, 1001, 1002);
+
+insert into post_has_been_commented_notification(id, creation_date, seen, user_id, type)
+values (1000, '2108-09-01 12:00:00', false, 1000, 'post_has_been_commented');
+insert into post_has_been_commented_notification(id, creation_date, seen, user_id, type)
+values (1001, '2108-09-01 12:00:00', true, 1000, 'post_has_been_commented');
+insert into post_has_been_commented_notification(id, creation_date, seen, user_id, type)
+values (1002, '2108-09-01 12:00:00', true, 1001, 'post_has_been_commented');
+insert into post_has_been_commented_notification(id, creation_date, seen, user_id, type)
+values (1003, '2108-09-01 12:00:00', false, 1001, 'post_has_been_commented');
+insert into post_has_been_rated_notification(id, creation_date, seen, user_id, type)
+values (1004, '2108-09-01 12:00:00', false, 1001, 'post_has_been_rated');

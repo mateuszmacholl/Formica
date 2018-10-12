@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.controller.user
+package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.comment.CommentConverter
 import mateuszmacholl.formica.dto.comment.CreateCommentDto

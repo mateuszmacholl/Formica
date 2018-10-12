@@ -18,11 +18,11 @@ constructor(private val commentRepo: CommentRepo) {
         return commentRepo.findAll(commentSpec, pageable)
     }
 
-    fun add(tag: Comment) {
-        commentRepo.save(tag)
+    fun add(comment: Comment) {
+        commentRepo.save(comment)
     }
 
-    fun delete(tag: Comment) {
-        commentRepo.delete(tag)
+    fun delete(comment: Comment) {
+        commentRepo.delete(comment)
     }
 }
