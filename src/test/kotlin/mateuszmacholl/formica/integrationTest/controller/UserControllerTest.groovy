@@ -3,11 +3,11 @@ package mateuszmacholl.formica.integrationTest.controller
 import mateuszmacholl.formica.model.comment.Comment
 import mateuszmacholl.formica.model.post.Post
 import mateuszmacholl.formica.model.token.PasswordResetToken
-import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.model.token.VerificationToken
+import mateuszmacholl.formica.model.user.User
+import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import mateuszmacholl.formica.service.token.VerificationTokenService
 import mateuszmacholl.formica.service.user.UserService
-import mateuszmacholl.formica.service.token.PasswordResetTokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -247,5 +247,14 @@ class UserControllerTest extends Specification {
         then:
         HttpStatus.OK == response.statusCode
         response.body != null
+    }
+
+    def "get notifications"(){
+        given:
+        def id = 1000
+        when:
+        def response = restTemplate.getForEntity(path + id + '/notifications', String.class)
+        then:
+        HttpStatus.OK == response.statusCode
     }
 }
