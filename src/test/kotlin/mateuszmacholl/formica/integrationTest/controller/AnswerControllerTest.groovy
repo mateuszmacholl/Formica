@@ -2,6 +2,7 @@ package mateuszmacholl.formica.integrationTest.controller
 
 import mateuszmacholl.formica.model.answer.Answer
 import mateuszmacholl.formica.model.comment.Comment
+import mateuszmacholl.formica.model.post.Post
 import mateuszmacholl.formica.service.answer.AnswerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
@@ -83,7 +84,7 @@ class AnswerControllerTest extends Specification {
         } != Optional.empty()
     }
 
-    def "get comments"(){
+    def "get comments"() {
         given:
         def id = 1000
         when:
@@ -93,4 +94,13 @@ class AnswerControllerTest extends Specification {
         response.body != null
     }
 
+    def "get post"() {
+        given:
+        def id = 1000
+        when:
+        def response = restTemplate.getForEntity(path + id + '/posts', Post.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
+    }
 }

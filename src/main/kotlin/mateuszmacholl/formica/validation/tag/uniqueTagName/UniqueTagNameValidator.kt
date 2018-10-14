@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.tag
+package mateuszmacholl.formica.validation.tag.uniqueTagName
 
 import mateuszmacholl.formica.service.tag.TagService
 import org.springframework.beans.factory.annotation.Autowired

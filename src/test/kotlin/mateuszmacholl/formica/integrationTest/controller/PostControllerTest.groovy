@@ -92,4 +92,16 @@ class PostControllerTest extends Specification {
         HttpStatus.OK == response.statusCode
         response.body != null
     }
+
+    /*
+    def "get best answer"(){
+        given:
+        def id = 1000
+        when:
+        def response = restTemplate.getForEntity(path + id + '/best-answer', Answer.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
+    }
+    */
 }

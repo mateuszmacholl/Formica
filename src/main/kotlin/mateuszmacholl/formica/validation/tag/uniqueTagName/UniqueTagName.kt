@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.tag
+package mateuszmacholl.formica.validation.tag.uniqueTagName
 
 import javax.validation.Constraint
 import javax.validation.Payload

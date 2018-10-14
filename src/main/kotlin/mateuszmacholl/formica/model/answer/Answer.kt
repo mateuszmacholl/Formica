@@ -13,6 +13,7 @@ data class Answer(
         var content: String? = null,
         @ManyToOne(fetch = FetchType.EAGER, targetEntity = Post::class)
         @JoinColumn(name = "post_id")
+        @JsonIgnore
         var post: Post? = null,
         @ManyToOne(fetch = FetchType.EAGER, targetEntity = User::class)
         @JoinColumn(name = "author_id")
@@ -27,5 +28,4 @@ data class Answer(
     @JsonIgnore
     @OneToMany(mappedBy = "answer", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Comment::class)
     var comments: MutableSet<Comment> = mutableSetOf()
-    var best: Boolean = false
 }

@@ -56,12 +56,23 @@ class AnswerController {
 
     @RequestMapping(value = ["/{id}/comments"], method = [RequestMethod.GET])
     fun getComments(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
-        val post = answerService.findById(id)
-        return if (!post.isPresent) {
+        val answer = answerService.findById(id)
+        return if (!answer.isPresent) {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
-            val comments = post.get().comments
+            val comments = answer.get().comments
             ResponseEntity<Any>(comments, HttpStatus.OK )
+        }
+    }
+
+    @RequestMapping(value = ["/{id}/posts"], method = [RequestMethod.GET])
+    fun getBestAnswer(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val answer = answerService.findById(id)
+        return if (!answer.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val post = answer.get().post
+            ResponseEntity<Any>(post, HttpStatus.OK )
         }
     }
 }

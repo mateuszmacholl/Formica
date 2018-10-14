@@ -19,26 +19,26 @@ INSERT INTO tag(id, name) VALUES (1001, 'books');
 INSERT INTO tag(id, name) VALUES (1002, 'cars');
 INSERT INTO tag(id, name) VALUES (1003, 'java');
 
-INSERT INTO post(id, creation_date, content, title, solved, votes, author_id)
- VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', false, -10, 1000);
-INSERT INTO post(id, creation_date, content, title, solved, votes, author_id)
-VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001', true, 10, 1000);
-INSERT INTO post(id, creation_date, content, title, solved, votes, author_id)
-VALUES (1002,'2118-09-01 12:00:00','content1002', 'title1002', true, 0, 1000);
-INSERT INTO post(id, creation_date, content, title, solved, votes, author_id)
-VALUES (1003,'2118-09-01 12:00:00', 'content1003', 'title1003', false, 0, 1001);
+INSERT INTO post(id, creation_date, content, title, votes, best_answer, author_id)
+ VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', 1000, 1000, 1000);
+INSERT INTO post(id, creation_date, content, title, votes, best_answer , author_id)
+VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001', 10, 1001, 1000);
+INSERT INTO post(id, creation_date, content, title, votes, best_answer, author_id)
+VALUES (1002,'2118-09-01 12:00:00','content1002', 'title1002', 0, null, 1000);
+INSERT INTO post(id, creation_date, content, title, votes, best_answer, author_id)
+VALUES (1003,'2118-09-01 12:00:00', 'content1003', 'title1003', 0, 1002, 1001);
 
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1001);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1003,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1003,1003);
 
-INSERT INTO answer(id, creation_date, content, votes, author_id, post_id, best)
-VALUES (1000,'2118-09-01 12:00:00', 'content1000', 100, 1000, 1000, false);
-INSERT INTO answer(id, creation_date, content, votes, author_id, post_id, best)
-VALUES (1001,'2118-09-01 12:00:00', 'content1002', 100, 1000, 1001, false);
-INSERT INTO answer(id, creation_date, content, votes, author_id, post_id, best)
-VALUES (1002,'2118-09-01 12:00:00', 'content1003', 100, 1001, 1002, true);
+INSERT INTO answer(id, creation_date, content, votes, author_id, post_id)
+VALUES (1000,'2118-09-01 12:00:00', 'content1000', 100, 1000, 1000);
+INSERT INTO answer(id, creation_date, content, votes, author_id, post_id)
+VALUES (1001,'2118-09-01 12:00:00', 'content1002', 100, 1000, 1001);
+INSERT INTO answer(id, creation_date, content, votes, author_id, post_id)
+VALUES (1002,'2118-09-01 12:00:00', 'content1003', 100, 1001, 1002);
 
 
 INSERT INTO comment(id, creation_date, content, author_id, answer_id)

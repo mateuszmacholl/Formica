@@ -64,4 +64,16 @@ class PostController {
             ResponseEntity<Any>(answers, HttpStatus.OK )
         }
     }
+/*
+    @RequestMapping(value = ["/{id}/best-answer"], method = [RequestMethod.GET])
+    fun getBestAnswer(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val post = postService.findById(id)
+        return if (!post.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val bestAnswer = post.get().bestAnswer
+            ResponseEntity<Any>(bestAnswer, HttpStatus.OK )
+        }
+    }
+    */
 }

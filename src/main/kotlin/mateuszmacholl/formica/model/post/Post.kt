@@ -29,6 +29,6 @@ data class Post(
     @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Answer::class)
     var answers: Set<Answer> = mutableSetOf()
-    var solved: Boolean = false
+    var bestAnswer: Int? = null
     var votes: Int = 0
 }
