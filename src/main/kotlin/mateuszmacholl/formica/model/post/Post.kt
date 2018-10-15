@@ -29,6 +29,6 @@ data class Post(
     @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Answer::class)
     var answers: Set<Answer> = mutableSetOf()
-    var bestAnswer: Int? = null
+    var bestAnswer: Int? = null // I don't know how to properly design this relation with Answer entity
     var votes: Int = 0
 }

@@ -18,11 +18,11 @@ constructor(private val postRepo: PostRepo) {
         return postRepo.findAll(postSpec, pageable)
     }
 
-    fun add(tag: Post) {
-        postRepo.save(tag)
+    fun add(post: Post) {
+        postRepo.save(post)
     }
 
-    fun delete(tag: Post) {
-        postRepo.delete(tag)
+    fun delete(post: Post) {
+        postRepo.delete(post)
     }
 }

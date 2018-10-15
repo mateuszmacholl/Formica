@@ -1,12 +1,13 @@
 package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.post.PostConverter
-import mateuszmacholl.formica.dto.post.CreatePostDto
+import mateuszmacholl.formica.dto.post.*
 import mateuszmacholl.formica.service.post.PostService
 import mateuszmacholl.formica.specification.PostSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -64,6 +65,63 @@ class PostController {
             ResponseEntity<Any>(answers, HttpStatus.OK )
         }
     }
+
+    @RequestMapping(value = ["/{id}/best-answer"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun setBestAnswer(@PathVariable(value = "id") id: Int,
+                      @RequestBody @Validated updateBestAnswerPostDto: UpdateBestAnswerPostDto): ResponseEntity<*> {
+        val post = postService.findById(id)
+        return if (!post.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val updatedPost = post.get()
+            updatedPost.bestAnswer = updateBestAnswerPostDto.bestAnswer
+            postService.add(updatedPost)
+            ResponseEntity<Any>(updatedPost, HttpStatus.OK )
+        }
+    }
+
+    @RequestMapping(value = ["/{id}/tags"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun setTags(@PathVariable(value = "id") id: Int,
+                      @RequestBody @Validated updateTagsPostDto: UpdateTagsPostDto): ResponseEntity<*> {
+        val post = postService.findById(id)
+        return if (!post.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val updatedPost = post.get()
+            updatedPost.tags = postConverter.toEntity(updateTagsPostDto)
+            postService.add(updatedPost)
+            ResponseEntity<Any>(updatedPost, HttpStatus.OK )
+        }
+    }
+
+    @RequestMapping(value = ["/{id}/title"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun setTitle(@PathVariable(value = "id") id: Int,
+                @RequestBody @Validated updateTitlePostDto: UpdateTitlePostDto): ResponseEntity<*> {
+        val post = postService.findById(id)
+        return if (!post.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val updatedPost = post.get()
+            updatedPost.title = updateTitlePostDto.title
+            postService.add(updatedPost)
+            ResponseEntity<Any>(updatedPost, HttpStatus.OK )
+        }
+    }
+
+    @RequestMapping(value = ["/{id}/content"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun setContent(@PathVariable(value = "id") id: Int,
+                           @RequestBody @Validated updateContentPostDto: UpdateContentPostDto): ResponseEntity<*> {
+        val post = postService.findById(id)
+        return if (!post.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val updatedPost = post.get()
+            updatedPost.content = updateContentPostDto.content
+            postService.add(updatedPost)
+            ResponseEntity<Any>(updatedPost, HttpStatus.OK )
+        }
+    }
+
 /*
     @RequestMapping(value = ["/{id}/best-answer"], method = [RequestMethod.GET])
     fun getBestAnswer(@PathVariable(value = "id") id: Int): ResponseEntity<*> {

@@ -8,6 +8,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.annotation.DirtiesContext
@@ -88,6 +89,62 @@ class PostControllerTest extends Specification {
         def id = 1000
         when:
         def response = restTemplate.getForEntity(path + id + '/answers', Answer[].class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
+    }
+
+    def "set best answer"(){
+        given:
+        def id = 1000
+        def bestAnswer = 1001
+        def body = [
+                bestAnswer: bestAnswer
+        ]
+        when:
+        def response = restTemplate.exchange(path + id + '/best-answer', HttpMethod.PATCH, new HttpEntity(body), Post.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
+    }
+
+    def "set tags"(){
+        given:
+        def id = 1000
+        def tags = ["kotlin", "java"]
+        def body = [
+                tags: tags
+        ]
+        when:
+        def response = restTemplate.exchange(path + id + '/tags', HttpMethod.PATCH, new HttpEntity(body), Post.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
+    }
+
+    def "set title"(){
+        given:
+        def id = 1000
+        def title = "new title"
+        def body = [
+                title: title
+        ]
+        when:
+        def response = restTemplate.exchange(path + id + '/title', HttpMethod.PATCH, new HttpEntity(body), Post.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
+    }
+
+    def "set content"(){
+        given:
+        def id = 1000
+        def content = "new content"
+        def body = [
+                content: content
+        ]
+        when:
+        def response = restTemplate.exchange(path + id + '/content', HttpMethod.PATCH, new HttpEntity(body), Post.class)
         then:
         HttpStatus.OK == response.statusCode
         response.body != null

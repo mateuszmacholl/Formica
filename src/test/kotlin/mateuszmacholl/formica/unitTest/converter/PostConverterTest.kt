@@ -3,6 +3,7 @@ package mateuszmacholl.formica.unitTest.converter
 import mateuszmacholl.formica.converter.post.PostConverter
 import mateuszmacholl.formica.dto.post.CreatePostDto
 import mateuszmacholl.formica.model.user.User
+import mateuszmacholl.formica.service.tag.TagService
 import mateuszmacholl.formica.service.user.UserService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -12,6 +13,7 @@ import org.mockito.Mockito
 
 class PostConverterTest {
     private lateinit var userService: UserService
+    private lateinit var tagService: TagService
     private lateinit var postConverter: PostConverter
     private val title = "title"
     private val content = "content"
@@ -22,7 +24,8 @@ class PostConverterTest {
     @BeforeEach
     fun init() {
         userService = Mockito.mock(UserService::class.java)
-        postConverter = PostConverter(userService)
+        tagService = Mockito.mock(TagService::class.java)
+        postConverter = PostConverter(userService, tagService)
         Mockito.`when`(postConverter.userService.findByUsername(author)).thenReturn(user)
     }
 
