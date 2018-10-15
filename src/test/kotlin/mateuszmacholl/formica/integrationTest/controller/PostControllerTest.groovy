@@ -101,10 +101,13 @@ class PostControllerTest extends Specification {
         def body = [
                 bestAnswer: bestAnswer
         ]
+        def oldPost = postService.findById(id).get()
         when:
         def response = restTemplate.exchange(path + id + '/best-answer', HttpMethod.PATCH, new HttpEntity(body), Post.class)
         then:
         HttpStatus.OK == response.statusCode
+        def newPost = postService.findById(id)
+        oldPost != newPost
         response.body != null
     }
 
@@ -115,10 +118,13 @@ class PostControllerTest extends Specification {
         def body = [
                 tags: tags
         ]
+        def oldPost = postService.findById(id).get()
         when:
         def response = restTemplate.exchange(path + id + '/tags', HttpMethod.PATCH, new HttpEntity(body), Post.class)
         then:
         HttpStatus.OK == response.statusCode
+        def newPost = postService.findById(id)
+        oldPost != newPost
         response.body != null
     }
 
@@ -129,10 +135,13 @@ class PostControllerTest extends Specification {
         def body = [
                 title: title
         ]
+        def oldPost = postService.findById(id).get()
         when:
         def response = restTemplate.exchange(path + id + '/title', HttpMethod.PATCH, new HttpEntity(body), Post.class)
         then:
         HttpStatus.OK == response.statusCode
+        def newPost = postService.findById(id)
+        oldPost != newPost
         response.body != null
     }
 
@@ -143,10 +152,13 @@ class PostControllerTest extends Specification {
         def body = [
                 content: content
         ]
+        def oldPost = postService.findById(id).get()
         when:
         def response = restTemplate.exchange(path + id + '/content', HttpMethod.PATCH, new HttpEntity(body), Post.class)
         then:
         HttpStatus.OK == response.statusCode
+        def newPost = postService.findById(id)
+        oldPost != newPost
         response.body != null
     }
 

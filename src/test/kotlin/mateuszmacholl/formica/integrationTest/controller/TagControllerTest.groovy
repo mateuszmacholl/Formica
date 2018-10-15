@@ -8,6 +8,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.annotation.DirtiesContext
@@ -84,6 +85,23 @@ class TagControllerTest extends Specification {
         def response = restTemplate.getForEntity(path + id + '/posts', Post[].class)
         then:
         HttpStatus.OK == response.statusCode
+        response.body != null
+    }
+
+    def "set name"(){
+        given:
+        def id = 1000
+        def name = "new name"
+        def body = [
+                name: name
+        ]
+        def oldTag = tagService.findById(id).get()
+        when:
+        def response = restTemplate.exchange(path + id + '/name', HttpMethod.PATCH, new HttpEntity(body), Tag.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        def newTag = tagService.findById(id)
+        oldTag != newTag
         response.body != null
     }
 

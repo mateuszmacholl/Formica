@@ -2,11 +2,13 @@ package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.tag.TagConverter
 import mateuszmacholl.formica.dto.tag.CreateTagDto
+import mateuszmacholl.formica.dto.tag.UpdateNameTagDto
 import mateuszmacholl.formica.service.tag.TagService
 import mateuszmacholl.formica.specification.TagSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -62,6 +64,20 @@ class TagController {
         } else {
             val posts = tag.get().posts
             ResponseEntity<Any>(posts, HttpStatus.OK )
+        }
+    }
+
+    @RequestMapping(value = ["/{id}/name"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun setName(@PathVariable(value = "id") id: Int,
+                 @RequestBody @Validated updateNameTagDto: UpdateNameTagDto): ResponseEntity<*> {
+        val tag = tagService.findById(id)
+        return if (!tag.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val updatedTag = tag.get()
+            updatedTag.name = updateNameTagDto.name
+            tagService.add(updatedTag)
+            ResponseEntity<Any>(updatedTag, HttpStatus.OK )
         }
     }
 
