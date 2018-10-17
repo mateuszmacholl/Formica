@@ -112,13 +112,13 @@ class AnswerControllerTest extends Specification {
         def body = [
                 content: content
         ]
-        def oldPost = answerService.findById(id).get()
+        def oldAnswer = answerService.findById(id).get()
         when:
         def response = restTemplate.exchange(path + id + '/content', HttpMethod.PATCH, new HttpEntity(body), Post.class)
         then:
         HttpStatus.OK == response.statusCode
-        def newPost = answerService.findById(id)
-        oldPost != newPost
+        def newAnswer = answerService.findById(id)
+        oldAnswer != newAnswer
         response.body != null
     }
 }

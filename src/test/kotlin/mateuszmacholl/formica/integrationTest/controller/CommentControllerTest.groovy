@@ -1,12 +1,14 @@
 package mateuszmacholl.formica.integrationTest.controller
 
 import mateuszmacholl.formica.model.comment.Comment
+import mateuszmacholl.formica.model.post.Post
 import mateuszmacholl.formica.service.comment.CommentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.annotation.DirtiesContext
@@ -80,6 +82,23 @@ class CommentControllerTest extends Specification {
                     comment.answer.id == answer
             )
         } != Optional.empty()
+    }
+
+    def "set content"(){
+        given:
+        def id = 1000
+        def content = "new content"
+        def body = [
+                content: content
+        ]
+        def oldComment = commentService.findById(id).get()
+        when:
+        def response = restTemplate.exchange(path + id + '/content', HttpMethod.PATCH, new HttpEntity(body), Post.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        def newComment = commentService.findById(id)
+        oldComment != newComment
+        response.body != null
     }
 
 }

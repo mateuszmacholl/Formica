@@ -2,11 +2,13 @@ package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.comment.CommentConverter
 import mateuszmacholl.formica.dto.comment.CreateCommentDto
+import mateuszmacholl.formica.dto.comment.UpdateCommentAnswerDto
 import mateuszmacholl.formica.service.comment.CommentService
 import mateuszmacholl.formica.specification.CommentSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -51,6 +53,20 @@ class CommentController {
         } else {
             commentService.delete(comment.get())
             ResponseEntity<Any>(HttpStatus.NO_CONTENT )
+        }
+    }
+
+    @RequestMapping(value = ["/{id}/content"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun setContent(@PathVariable(value = "id") id: Int,
+                   @RequestBody @Validated updateCommentAnswerDto: UpdateCommentAnswerDto): ResponseEntity<*> {
+        val comment = commentService.findById(id)
+        return if (!comment.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val updatedComment = comment.get()
+            updatedComment.content = updateCommentAnswerDto.content
+            commentService.add(updatedComment)
+            ResponseEntity<Any>(updatedComment, HttpStatus.OK )
         }
     }
 }
