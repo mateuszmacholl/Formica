@@ -2,11 +2,13 @@ package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.answer.AnswerConverter
 import mateuszmacholl.formica.dto.answer.CreateAnswerDto
+import mateuszmacholl.formica.dto.post.UpdateContentPostDto
 import mateuszmacholl.formica.service.answer.AnswerService
 import mateuszmacholl.formica.specification.AnswerSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -75,4 +77,20 @@ class AnswerController {
             ResponseEntity<Any>(post, HttpStatus.OK )
         }
     }
+
+    @RequestMapping(value = ["/{id}/content"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun setContent(@PathVariable(value = "id") id: Int,
+                   @RequestBody @Validated updateContentPostDto: UpdateContentPostDto): ResponseEntity<*> {
+        val post = answerService.findById(id)
+        return if (!post.isPresent) {
+            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        } else {
+            val updatedPost = post.get()
+            updatedPost.content = updateContentPostDto.content
+            answerService.add(updatedPost)
+            ResponseEntity<Any>(updatedPost, HttpStatus.OK )
+        }
+    }
+
+
 }

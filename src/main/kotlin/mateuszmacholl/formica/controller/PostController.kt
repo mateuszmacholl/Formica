@@ -1,7 +1,11 @@
 package mateuszmacholl.formica.controller
 
 import mateuszmacholl.formica.converter.post.PostConverter
-import mateuszmacholl.formica.dto.post.*
+import mateuszmacholl.formica.dto.answer.UpdateContentAnswerDto
+import mateuszmacholl.formica.dto.post.CreatePostDto
+import mateuszmacholl.formica.dto.post.UpdateBestAnswerPostDto
+import mateuszmacholl.formica.dto.post.UpdateTagsPostDto
+import mateuszmacholl.formica.dto.post.UpdateTitlePostDto
 import mateuszmacholl.formica.service.post.PostService
 import mateuszmacholl.formica.specification.PostSpec
 import org.springframework.beans.factory.annotation.Autowired
@@ -110,15 +114,15 @@ class PostController {
 
     @RequestMapping(value = ["/{id}/content"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun setContent(@PathVariable(value = "id") id: Int,
-                           @RequestBody @Validated updateContentPostDto: UpdateContentPostDto): ResponseEntity<*> {
-        val post = postService.findById(id)
-        return if (!post.isPresent) {
+                           @RequestBody @Validated updateContentAnswerDto: UpdateContentAnswerDto): ResponseEntity<*> {
+        val answer = postService.findById(id)
+        return if (!answer.isPresent) {
             ResponseEntity<Any>(HttpStatus.NOT_FOUND)
         } else {
-            val updatedPost = post.get()
-            updatedPost.content = updateContentPostDto.content
-            postService.add(updatedPost)
-            ResponseEntity<Any>(updatedPost, HttpStatus.OK )
+            val updatedAnswer = answer.get()
+            updatedAnswer.content = updateContentAnswerDto.content
+            postService.add(updatedAnswer)
+            ResponseEntity<Any>(updatedAnswer, HttpStatus.OK )
         }
     }
 
