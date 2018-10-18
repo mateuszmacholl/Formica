@@ -94,23 +94,6 @@ class PostControllerTest extends Specification {
         response.body != null
     }
 
-    def "set best answer"(){
-        given:
-        def id = 1000
-        def bestAnswer = 1001
-        def body = [
-                bestAnswer: bestAnswer
-        ]
-        def oldPost = postService.findById(id).get()
-        when:
-        def response = restTemplate.exchange(path + id + '/best-answer', HttpMethod.PATCH, new HttpEntity(body), Post.class)
-        then:
-        HttpStatus.OK == response.statusCode
-        def newPost = postService.findById(id)
-        oldPost != newPost
-        response.body != null
-    }
-
     def "set tags"(){
         given:
         def id = 1000
@@ -161,16 +144,4 @@ class PostControllerTest extends Specification {
         oldPost != newPost
         response.body != null
     }
-
-    /*
-    def "get best answer"(){
-        given:
-        def id = 1000
-        when:
-        def response = restTemplate.getForEntity(path + id + '/best-answer', Answer.class)
-        then:
-        HttpStatus.OK == response.statusCode
-        response.body != null
-    }
-    */
 }

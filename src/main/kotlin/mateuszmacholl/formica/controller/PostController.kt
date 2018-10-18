@@ -3,7 +3,6 @@ package mateuszmacholl.formica.controller
 import mateuszmacholl.formica.converter.post.PostConverter
 import mateuszmacholl.formica.dto.answer.UpdateContentAnswerDto
 import mateuszmacholl.formica.dto.post.CreatePostDto
-import mateuszmacholl.formica.dto.post.UpdateBestAnswerPostDto
 import mateuszmacholl.formica.dto.post.UpdateTagsPostDto
 import mateuszmacholl.formica.dto.post.UpdateTitlePostDto
 import mateuszmacholl.formica.service.post.PostService
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
@@ -50,7 +48,7 @@ class PostController {
     }
 
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.DELETE])
-    @PreAuthorize("@JwtService.hasRole('user')")
+  //  @PreAuthorize("@JwtService.hasRole('user')")
     fun deleteById(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
         val post = postService.findById(id)
         return if (!post.isPresent) {
@@ -69,20 +67,6 @@ class PostController {
         } else {
             val answers = post.get().answers
             ResponseEntity<Any>(answers, HttpStatus.OK )
-        }
-    }
-
-    @RequestMapping(value = ["/{id}/best-answer"], method = [RequestMethod.PATCH], consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun setBestAnswer(@PathVariable(value = "id") id: Int,
-                      @RequestBody @Validated updateBestAnswerPostDto: UpdateBestAnswerPostDto): ResponseEntity<*> {
-        val post = postService.findById(id)
-        return if (!post.isPresent) {
-            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
-        } else {
-            val updatedPost = post.get()
-            updatedPost.bestAnswer = updateBestAnswerPostDto.bestAnswer
-            postService.add(updatedPost)
-            ResponseEntity<Any>(updatedPost, HttpStatus.OK )
         }
     }
 
@@ -127,17 +111,4 @@ class PostController {
             ResponseEntity<Any>(updatedAnswer, HttpStatus.OK )
         }
     }
-
-/*
-    @RequestMapping(value = ["/{id}/best-answer"], method = [RequestMethod.GET])
-    fun getBestAnswer(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
-        val post = postService.findById(id)
-        return if (!post.isPresent) {
-            ResponseEntity<Any>(HttpStatus.NOT_FOUND)
-        } else {
-            val bestAnswer = post.get().bestAnswer
-            ResponseEntity<Any>(bestAnswer, HttpStatus.OK )
-        }
-    }
-    */
 }
