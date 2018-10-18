@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
@@ -49,6 +50,7 @@ class PostController {
     }
 
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.DELETE])
+    @PreAuthorize("@JwtService.hasRole('user')")
     fun deleteById(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
         val post = postService.findById(id)
         return if (!post.isPresent) {

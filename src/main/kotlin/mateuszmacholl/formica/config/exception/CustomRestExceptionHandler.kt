@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.validation.BindException
 import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.springframework.web.HttpRequestMethodNotSupportedException
@@ -27,9 +28,6 @@ import javax.validation.ConstraintViolationException
 
 @ControllerAdvice
 class CustomRestExceptionHandler : ResponseEntityExceptionHandler() {
-
-
-
     override fun handleMethodArgumentNotValid(ex: MethodArgumentNotValidException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
         val apiError = createValidationError(ex)
         return handleExceptionInternal(ex, apiError, headers, apiError.status, request)
@@ -129,6 +127,14 @@ class CustomRestExceptionHandler : ResponseEntityExceptionHandler() {
     @Throws(IOException::class)
     fun handleIllegalArgumentException(e: IllegalArgumentException, response: HttpServletResponse): ResponseEntity<Any> {
         return ResponseEntity(HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDeniedException(ex: Exception, request: WebRequest): ResponseEntity<Any> {
+        val message = "Access denied"
+
+        val apiError = ApiError(HttpStatus.UNAUTHORIZED, message, "")
+        return ResponseEntity(apiError, HttpHeaders(), apiError.status)
     }
 
     @ExceptionHandler(Exception::class)

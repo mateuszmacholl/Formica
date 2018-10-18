@@ -56,7 +56,7 @@ class JWTAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
 
     private fun getAuthoritiesFromUser(user: User): List<SimpleGrantedAuthority> {
         return user.roles.stream()
-                .map { role -> SimpleGrantedAuthority("ROLE_$role") }.toList()
+                .map { role -> SimpleGrantedAuthority(role) }.toList()
     }
 
     override fun successfulAuthentication(req: HttpServletRequest,

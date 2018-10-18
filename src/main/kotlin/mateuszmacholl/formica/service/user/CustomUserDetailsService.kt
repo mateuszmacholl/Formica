@@ -32,10 +32,8 @@ constructor(private val userRepo: UserRepo) : UserDetailsService {
         val authorities = ArrayList<GrantedAuthority>()
 
         for (role in user.roles) {
-            println("role : $role")
-            authorities.add(SimpleGrantedAuthority("role_$role"))
+            authorities.add(SimpleGrantedAuthority(role))
         }
-        print("authorities :$authorities")
         return authorities
     }
 }

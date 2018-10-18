@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -22,6 +23,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Profile(value = ["development"])
 class SecurityConfig @Autowired
 constructor(@param:Qualifier("customUserDetailsService") private val userDetailsService: UserDetailsService,
@@ -51,8 +53,8 @@ constructor(@param:Qualifier("customUserDetailsService") private val userDetails
                 .antMatchers(HttpMethod.POST, "/users/verification-token").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/password-reset-token").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/password").permitAll()
-                //.antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
+                //.antMatchers("/**").permitAll()
                 .and()
                 .addFilter(jwtAuthenticationFilter)
                 .addFilter(JWTAuthorizationFilter(authenticationManager()))
