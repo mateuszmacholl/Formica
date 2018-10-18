@@ -2,6 +2,7 @@ package mateuszmacholl.formica.unitTest.converter
 
 import mateuszmacholl.formica.converter.post.PostConverter
 import mateuszmacholl.formica.dto.post.CreatePostDto
+import mateuszmacholl.formica.model.coordinates.Coordinates
 import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.service.tag.TagService
 import mateuszmacholl.formica.service.user.UserService
@@ -18,7 +19,8 @@ class PostConverterTest {
     private val title = "title"
     private val content = "content"
     private val author = "author"
-    private val createPostDto = CreatePostDto(title = title, content = content, author = author)
+    private val coordinates = Coordinates(10.5f,50.343f)
+    private val createPostDto = CreatePostDto(title = title, content = content, author = author, coordinates = coordinates)
     private val user = User(username = author)
 
     @BeforeEach
@@ -37,6 +39,7 @@ class PostConverterTest {
         Assertions.assertTrue(post.author!!.username === user.username)
         Assertions.assertTrue(post.title === title)
         Assertions.assertTrue(post.content === content)
+        Assertions.assertTrue(post.coordinates!!.latitude === coordinates.latitude)
     }
 
     @Test

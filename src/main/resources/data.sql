@@ -19,10 +19,13 @@ INSERT INTO tag(id, name) VALUES (1001, 'books');
 INSERT INTO tag(id, name) VALUES (1002, 'cars');
 INSERT INTO tag(id, name) VALUES (1003, 'java');
 
-INSERT INTO post(id, creation_date, content, title, votes, author_id)
- VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', 1000, 1000);
-INSERT INTO post(id, creation_date, content, title, votes , author_id)
-VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001', 10, 1000);
+insert into coordinates (id, latitude, longitude) values (1000, 10.333, 11.3242);
+insert into coordinates (id, latitude, longitude) values (1001, 11.333, 15.3242);
+
+INSERT INTO post(id, creation_date, content, title, votes, author_id, coordinates_id)
+ VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', 1000, 1000, 1000);
+INSERT INTO post(id, creation_date, content, title, votes , author_id, coordinates_id)
+VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001', 10, 1000, 1001);
 INSERT INTO post(id, creation_date, content, title, votes, author_id)
 VALUES (1002,'2118-09-01 12:00:00','content1002', 'title1002', 0, 1000);
 INSERT INTO post(id, creation_date, content, title, votes, author_id)

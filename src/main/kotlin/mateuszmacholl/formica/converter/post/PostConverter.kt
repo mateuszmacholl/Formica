@@ -10,14 +10,16 @@ import mateuszmacholl.formica.service.user.UserService
 import org.springframework.stereotype.Service
 
 @Service
-class PostConverter(val userService: UserService, val tagService: TagService) : DtoConverter<CreatePostDto>() {
+class PostConverter(val userService: UserService,
+                    val tagService: TagService) : DtoConverter<CreatePostDto>() {
 
     override fun toEntity(createPostDto: CreatePostDto): Post {
         val user = userService.findByUsername(createPostDto.author) ?: throw IllegalArgumentException()
         return Post(
                 title = createPostDto.title,
                 content = createPostDto.content,
-                author = user
+                author = user,
+                coordinates = createPostDto.coordinates
         )
     }
 
@@ -29,6 +31,6 @@ class PostConverter(val userService: UserService, val tagService: TagService) : 
                 tagsEntities.add(tagEntity)
             }
         }
-        return tagsEntities // I don't know how to return set without nullable values with stream
+        return tagsEntities // I don't know how to return set without nullable values using stream
     }
 }

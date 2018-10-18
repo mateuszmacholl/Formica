@@ -63,10 +63,15 @@ class PostControllerTest extends Specification {
         def title = "title"
         def content = "content"
         def author = "d_enabled_user"
+        def coordinates = [
+                longitude: 10.4f,
+                latitude: 10.4f
+        ]
         def body = [
                 title: title,
                 content: content,
-                author: author
+                author: author,
+                coordinates: coordinates
         ]
         when:
         def response = restTemplate.postForEntity(path, body, String.class)
@@ -79,7 +84,8 @@ class PostControllerTest extends Specification {
             (
                     post.title == title &&
                     post.content == content &&
-                    post.author.username == author
+                    post.author.username == author &&
+                    post.coordinates.latitude == coordinates.latitude
             )
         } != Optional.empty()
     }
