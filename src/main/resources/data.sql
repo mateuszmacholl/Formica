@@ -65,5 +65,3 @@ insert into post_has_been_commented_notification(id, creation_date, seen, notifi
 values (1002, '2108-09-01 12:00:00', false, 1000, 1001, 'post_has_been_commented', 1001);
 insert into post_has_been_commented_notification(id, creation_date, seen, notified_user_id, notifier_user_id, type, post_id)
 values (1003, '2108-09-01 12:00:00', false, 1001, 1000, 'post_has_been_commented', 1001);
-insert into best_answer_has_been_chosen_notification(id, creation_date, seen, notified_user_id, notifier_user_id, type, post_id)
-values (1000, '2108-09-01 12:00:00', false, 1001, 1000, 'best_answer_has_been_chosen', 1000);
