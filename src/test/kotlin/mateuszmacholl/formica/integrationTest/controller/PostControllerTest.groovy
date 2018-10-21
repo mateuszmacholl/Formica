@@ -58,7 +58,7 @@ class PostControllerTest extends Specification {
         post == Optional.empty()
     }
 
-    def "add post"() {
+    def "add post with coordinates"() {
         given:
         def title = "title"
         def content = "content"
@@ -89,6 +89,60 @@ class PostControllerTest extends Specification {
             )
         } != Optional.empty()
     }
+
+    def "add post with channel"() {
+        given:
+        def title = "title"
+        def content = "content"
+        def author = "d_enabled_user"
+        def channel = 1000
+        def body = [
+                title: title,
+                content: content,
+                author: author,
+                channel: channel
+        ]
+        when:
+        def response = restTemplate.postForEntity(path, body, String.class)
+
+        then:
+        HttpStatus.CREATED == response.statusCode
+
+        def posts = postService.findAll() as ArrayList<Post>
+        posts.stream().filter { post ->
+            (
+                    post.title == title &&
+                            post.content == content &&
+                            post.author.username == author &&
+                            post.channel.id == channel
+            )
+        } != Optional.empty()
+    }
+
+    def "add post with channel and coordinates (BAD_REQUEST)"() {
+        given:
+        def title = "title"
+        def content = "content"
+        def author = "d_enabled_user"
+        def channel = 1000
+        def coordinates = [
+                longitude: 10.4f,
+                latitude: 10.4f
+        ]
+        def body = [
+                title: title,
+                content: content,
+                author: author,
+                channel: channel,
+                coordinates: coordinates
+        ]
+        when:
+        def response = restTemplate.postForEntity(path, body, String.class)
+
+        then:
+        HttpStatus.BAD_REQUEST == response.statusCode
+    }
+
 
     def "get answers"(){
         given:

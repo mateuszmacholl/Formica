@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.post
+package mateuszmacholl.formica.validation.post.existPostWithId
 
 import javax.validation.Constraint
 import javax.validation.Payload

@@ -2,6 +2,7 @@ package mateuszmacholl.formica.model.post
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import mateuszmacholl.formica.model.answer.Answer
+import mateuszmacholl.formica.model.channel.Channel
 import mateuszmacholl.formica.model.coordinates.Coordinates
 import mateuszmacholl.formica.model.tag.Tag
 import mateuszmacholl.formica.model.user.User
@@ -17,9 +18,12 @@ data class Post(
         @JoinColumn(name = "author_id")
         var author: User? = null,
         @OneToOne(cascade = [CascadeType.ALL])
-        @JoinColumn(name="coordinates_id")
-        var coordinates: Coordinates? = null
-){
+        @JoinColumn(name = "coordinates_id")
+        var coordinates: Coordinates? = null,
+        @ManyToOne(fetch = FetchType.EAGER, targetEntity = Channel::class)
+        @JoinColumn(name = "channel_id")
+        var channel: Channel? = null
+) {
     @Id
     @GeneratedValue
     var id: Int? = null

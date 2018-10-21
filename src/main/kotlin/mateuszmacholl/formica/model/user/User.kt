@@ -57,8 +57,6 @@ data class User(
     @OneToMany(mappedBy = "notifiedUser", cascade = [CascadeType.ALL], orphanRemoval = true, targetEntity = Notification::class)
     var notifications: MutableSet<Notification> = mutableSetOf()
 
-
-
     init {
         roles.add("user")
     }

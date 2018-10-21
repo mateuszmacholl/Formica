@@ -4,6 +4,7 @@ import mateuszmacholl.formica.converter.post.PostConverter
 import mateuszmacholl.formica.dto.post.CreatePostDto
 import mateuszmacholl.formica.model.coordinates.Coordinates
 import mateuszmacholl.formica.model.user.User
+import mateuszmacholl.formica.service.channel.ChannelService
 import mateuszmacholl.formica.service.tag.TagService
 import mateuszmacholl.formica.service.user.UserService
 import org.junit.jupiter.api.Assertions
@@ -15,6 +16,7 @@ import org.mockito.Mockito
 class PostConverterTest {
     private lateinit var userService: UserService
     private lateinit var tagService: TagService
+    private lateinit var channelService: ChannelService
     private lateinit var postConverter: PostConverter
     private val title = "title"
     private val content = "content"
@@ -27,7 +29,8 @@ class PostConverterTest {
     fun init() {
         userService = Mockito.mock(UserService::class.java)
         tagService = Mockito.mock(TagService::class.java)
-        postConverter = PostConverter(userService, tagService)
+        channelService = Mockito.mock(ChannelService::class.java)
+        postConverter = PostConverter(userService, tagService, channelService)
         Mockito.`when`(postConverter.userService.findByUsername(author)).thenReturn(user)
     }
 
@@ -39,7 +42,7 @@ class PostConverterTest {
         Assertions.assertTrue(post.author!!.username === user.username)
         Assertions.assertTrue(post.title === title)
         Assertions.assertTrue(post.content === content)
-        Assertions.assertTrue(post.coordinates!!.latitude === coordinates.latitude)
+        Assertions.assertTrue(post.coordinates!!.latitude == coordinates.latitude)
     }
 
     @Test

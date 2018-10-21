@@ -1,4 +1,4 @@
-package mateuszmacholl.formica.validation.post
+package mateuszmacholl.formica.validation.post.existPostWithId
 
 import mateuszmacholl.formica.service.post.PostService
 import org.springframework.beans.factory.annotation.Autowired

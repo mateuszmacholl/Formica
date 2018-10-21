@@ -19,17 +19,25 @@ INSERT INTO tag(id, name) VALUES (1001, 'books');
 INSERT INTO tag(id, name) VALUES (1002, 'cars');
 INSERT INTO tag(id, name) VALUES (1003, 'java');
 
-insert into coordinates (id, latitude, longitude) values (1000, 10.333, 11.3242);
-insert into coordinates (id, latitude, longitude) values (1001, 11.333, 15.3242);
+insert into coordinates (id, latitude, longitude) values (1000, 10, 11);
+insert into coordinates (id, latitude, longitude) values (1001, 11, 10);
+insert into coordinates (id, latitude, longitude) values (1002, 11.01, 10.01);
+insert into coordinates (id, latitude, longitude) values (1003, 12.01, 10.01);
+insert into coordinates (id, latitude, longitude) values (1004, 11.01, 11.01);
+insert into coordinates (id, latitude, longitude) values (1005, 13.01, 10.01);
+
+insert into channel(id, name, coordinates_id) values (1000, 'Gdansk', 1000);
+insert into channel(id, name, coordinates_id) values (1001, 'Pomnik Neptuna', 1001);
+insert into channel(id, name, coordinates_id) values (1002, 'Dworzec Lublin', 1002);
 
 INSERT INTO post(id, creation_date, content, title, votes, author_id, coordinates_id)
- VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', 1000, 1000, 1000);
+ VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', 1000, 1000, 1003);
 INSERT INTO post(id, creation_date, content, title, votes , author_id, coordinates_id)
-VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001', 10, 1000, 1001);
-INSERT INTO post(id, creation_date, content, title, votes, author_id)
-VALUES (1002,'2118-09-01 12:00:00','content1002', 'title1002', 0, 1000);
-INSERT INTO post(id, creation_date, content, title, votes, author_id)
-VALUES (1003,'2118-09-01 12:00:00', 'content1003', 'title1003', 0, 1001);
+VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001', 10, 1000, 1004);
+INSERT INTO post(id, creation_date, content, title, votes, author_id, channel_id)
+VALUES (1002,'2118-09-01 12:00:00','content1002', 'title1002', 0, 1000, 1002);
+INSERT INTO post(id, creation_date, content, title, votes, author_id, channel_id)
+VALUES (1003,'2118-09-01 12:00:00', 'content1003', 'title1003', 0, 1001, 1000);
 
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1001);
