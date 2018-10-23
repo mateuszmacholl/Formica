@@ -4,9 +4,7 @@ import org.springframework.beans.BeanWrapperImpl
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
-
-
-class OneOfThemNotNullValidator : ConstraintValidator<ChannelOrCoordinatesPassed, Any> {
+class ChannelOrCoordinatesPassedValidator : ConstraintValidator<ChannelOrCoordinatesPassed, Any> {
     private var channel: String? = null
     private var coordinates: String? = null
 
