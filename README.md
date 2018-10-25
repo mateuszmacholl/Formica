@@ -14,6 +14,7 @@
     - /{id} [GET] [DELETE]
   - /channels [GET] [POST]
     - /{id} [GET] [DELETE]
+      - /posts [GET]
       - /name [PATCH]
   - /comments [GET] [POST] 
       - /{id} [GET] [DELETE]
