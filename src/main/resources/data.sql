@@ -25,10 +25,14 @@ insert into coordinates (id, latitude, longitude) values (1002, 11.01, 10.01);
 insert into coordinates (id, latitude, longitude) values (1003, 12.01, 10.01);
 insert into coordinates (id, latitude, longitude) values (1004, 11.01, 11.01);
 insert into coordinates (id, latitude, longitude) values (1005, 13.01, 10.01);
+insert into coordinates (id, latitude, longitude) values (1006, 1, 1);
+insert into coordinates (id, latitude, longitude) values (1007, 1.005, 1);
 
 insert into channel(id, name, coordinates_id) values (1000, 'Gdansk', 1000);
 insert into channel(id, name, coordinates_id) values (1001, 'Pomnik Neptuna', 1001);
 insert into channel(id, name, coordinates_id) values (1002, 'Dworzec Lublin', 1002);
+insert into channel(id, name, coordinates_id) values (1003, 'Dworzec Gdynia', 1006);
+insert into channel(id, name, coordinates_id) values (1004, 'Dworzec Sopot', 1007);
 
 INSERT INTO post(id, creation_date, content, title, votes, author_id, coordinates_id)
  VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', 1000, 1000, 1003);

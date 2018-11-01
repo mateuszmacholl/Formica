@@ -35,6 +35,20 @@ class ChannelControllerTest extends Specification {
         HttpStatus.OK == response.statusCode
     }
 
+    def "get all near area"() {
+        given:
+        def longitude = 1
+        def latitude = 1
+        def range = 1000
+
+        when:
+        def response = restTemplate.getForEntity(path + "/near-area?longitude=" + longitude + "&latitude=" + latitude + "&range=" + range, Channel[].class)
+
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body.length == 2
+    }
+
     def "get channel by id"() {
         given:
         def id = 1001
@@ -62,11 +76,11 @@ class ChannelControllerTest extends Specification {
         given:
         def name = "dworzec glowny gdansk"
         def coordinates = [
-                latitude: 10f,
+                latitude : 10f,
                 longitude: 10f
         ]
         def body = [
-                name: name,
+                name       : name,
                 coordinates: coordinates
         ]
         when:
@@ -79,12 +93,12 @@ class ChannelControllerTest extends Specification {
         channels.stream().filter { channel ->
             (
                     channel.name == name &&
-                    channel.coordinates.longitude == coordinates.longitude
+                            channel.coordinates.longitude == coordinates.longitude
             )
         } != Optional.empty()
     }
 
-    def "get posts"(){
+    def "get posts"() {
         given:
         def id = 1000
         when:
@@ -94,7 +108,7 @@ class ChannelControllerTest extends Specification {
         response.body != null
     }
 
-    def "set name"(){
+    def "set name"() {
         given:
         def id = 1000
         def name = "new name"

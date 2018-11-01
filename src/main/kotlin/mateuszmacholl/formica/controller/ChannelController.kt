@@ -3,6 +3,7 @@ package mateuszmacholl.formica.controller
 import mateuszmacholl.formica.converter.channel.ChannelConverter
 import mateuszmacholl.formica.dto.channel.CreateChannelDto
 import mateuszmacholl.formica.dto.channel.UpdateNameChannelDto
+import mateuszmacholl.formica.model.coordinates.Coordinates
 import mateuszmacholl.formica.service.channel.ChannelService
 import mateuszmacholl.formica.specification.ChannelSpec
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,6 +26,15 @@ class ChannelController {
     @RequestMapping(value = [""], method = [RequestMethod.GET])
     fun getAllBy(channelSpec: ChannelSpec, pageable: Pageable): ResponseEntity<*> {
         val channels = channelService.findAll(channelSpec, pageable)
+        return ResponseEntity(channels, HttpStatus.OK)
+    }
+
+    @RequestMapping(value = ["/near-area"], method = [RequestMethod.GET])
+    fun getAllNearArea(@RequestParam(value = "longitude") longitude: Float,
+                       @RequestParam(value = "latitude") latitude: Float,
+                       @RequestParam(value = "range") range: Int): ResponseEntity<*> {
+        val coordinates = Coordinates(latitude = latitude, longitude =  longitude)
+        val channels = channelService.findNearArea(coordinates, range)
         return ResponseEntity(channels, HttpStatus.OK)
     }
 
@@ -80,5 +90,4 @@ class ChannelController {
             ResponseEntity<Any>(updatedChannel, HttpStatus.OK )
         }
     }
-
 }
