@@ -13,6 +13,7 @@
   - /notifications [GET]
     - /{id} [GET] [DELETE]
   - /channels [GET] [POST]
+    - /near-area [GET]
     - /{id} [GET] [DELETE]
       - /posts [GET]
       - /name [PATCH]
