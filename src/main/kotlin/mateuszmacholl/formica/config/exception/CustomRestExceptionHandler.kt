@@ -119,7 +119,7 @@ class CustomRestExceptionHandler : ResponseEntityExceptionHandler() {
     override fun handleHttpMessageNotReadable(ex: HttpMessageNotReadableException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
         val error = "Http message is not readable. One of the causes can be empty request body or one of the fields"
 
-        val apiError = ApiError(HttpStatus.BAD_REQUEST, "", error)
+        val apiError = ApiError(HttpStatus.BAD_REQUEST, error, "")
         return ResponseEntity(apiError, HttpHeaders(), apiError.status)
     }
 
