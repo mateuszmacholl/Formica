@@ -48,7 +48,7 @@ class CustomRestExceptionHandler : ResponseEntityExceptionHandler() {
         for (error in exception.bindingResult.globalErrors) {
             errors.add(error.objectName + ": " + error.defaultMessage)
         }
-        return ApiError(HttpStatus.BAD_REQUEST, "", errors)
+        return ApiError(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.name, errors)
     }
 
     override fun handleTypeMismatch(ex: TypeMismatchException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
