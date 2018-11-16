@@ -1,5 +1,5 @@
 package mateuszmacholl.formica.converter
 
-abstract class DtoConverter<T> {
-    abstract fun toEntity(t: T): Any
+abstract class DtoConverter<from> {
+    abstract fun toEntity(from: from): Any
 }

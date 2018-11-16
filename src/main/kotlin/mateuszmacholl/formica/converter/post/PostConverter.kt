@@ -15,18 +15,18 @@ class PostConverter(val userService: UserService,
                     val tagService: TagService,
                     val channelService: ChannelService) : DtoConverter<CreatePostDto>() {
 
-    override fun toEntity(createPostDto: CreatePostDto): Post {
-        val user = userService.findByUsername(createPostDto.author) ?: throw IllegalArgumentException()
+    override fun toEntity(from: CreatePostDto): Post {
+        val user = userService.findByUsername(from.author) ?: throw IllegalArgumentException()
         val post = Post(
-                title = createPostDto.title,
-                content = createPostDto.content,
+                title = from.title,
+                content = from.content,
                 author = user,
-                coordinates = createPostDto.coordinates
+                coordinates = from.coordinates
         )
-        if (createPostDto.channel != null) {
-            post.channel = channelService.findById(createPostDto.channel).get()
-        } else if (createPostDto.coordinates != null) {
-            post.coordinates = createPostDto.coordinates
+        if (from.channel != null) {
+            post.channel = channelService.findById(from.channel).get()
+        } else if (from.coordinates != null) {
+            post.coordinates = from.coordinates
         }
         return post
     }

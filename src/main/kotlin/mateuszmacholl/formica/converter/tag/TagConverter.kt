@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class TagConverter: DtoConverter<CreateTagDto>() {
-    override fun toEntity(createTagDto: CreateTagDto) = Tag (
-        name = createTagDto.name
+    override fun toEntity(from: CreateTagDto) = Tag (
+        name = from.name
     )
 }

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class VerificationTokenConverter(val userService: UserService): DtoConverter<CreateVerificationTokenDto>() {
-    override fun toEntity(createVerificationTokenDto: CreateVerificationTokenDto): VerificationToken {
-        val user = userService.findByUsername(createVerificationTokenDto.user) ?: throw IllegalArgumentException()
-        return VerificationToken(token = createVerificationTokenDto.token, user = user)
+    override fun toEntity(from: CreateVerificationTokenDto): VerificationToken {
+        val user = userService.findByUsername(from.user) ?: throw IllegalArgumentException()
+        return VerificationToken(token = from.token, user = user)
     }
 }

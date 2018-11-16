@@ -7,10 +7,10 @@ import javax.persistence.*
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class Notification(
-        @ManyToOne(fetch = FetchType.EAGER, targetEntity = User::class)
+        @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], targetEntity = User::class)
         @JoinColumn(name = "notified_user_id")
         var notifiedUser: User? = null,
-        @ManyToOne(fetch = FetchType.EAGER, targetEntity = User::class)
+        @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], targetEntity = User::class)
         @JoinColumn(name = "notifier_user_id")
         var notifierUser: User? = null,
         val type: String

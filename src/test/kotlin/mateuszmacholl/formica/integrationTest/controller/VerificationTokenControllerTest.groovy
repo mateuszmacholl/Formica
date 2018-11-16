@@ -1,7 +1,7 @@
 package mateuszmacholl.formica.integrationTest.controller
 
-import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.model.token.VerificationToken
+import mateuszmacholl.formica.model.user.User
 import mateuszmacholl.formica.service.token.VerificationTokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
@@ -14,7 +14,8 @@ import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.ANY)
 @ActiveProfiles(value = ["test"])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -42,6 +43,16 @@ class VerificationTokenControllerTest extends Specification {
 
         then:
         HttpStatus.OK == response.statusCode
+    }
+
+    def "get user"(){
+        given:
+        def id = 1000
+        when:
+        def response = restTemplate.getForEntity(path + id + '/users', User.class)
+        then:
+        HttpStatus.OK == response.statusCode
+        response.body != null
     }
 
     def "delete verification token by id"() {
@@ -79,15 +90,4 @@ class VerificationTokenControllerTest extends Specification {
             )
         } != Optional.empty()
     }
-
-    def "get user"(){
-        given:
-        def id = 1000
-        when:
-        def response = restTemplate.getForEntity(path + id + '/users', User.class)
-        then:
-        HttpStatus.OK == response.statusCode
-        response.body != null
-    }
-
 }

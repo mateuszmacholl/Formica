@@ -17,7 +17,7 @@ import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.ANY)
 @ActiveProfiles(value = ["test"])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -41,6 +41,25 @@ class LoginUserControllerTest extends Specification {
         then:
         HttpStatus.OK == response.statusCode
         response.body != null
+    }
+
+    def "change password successful"() {
+        given:
+        def token = "token12345"
+        def newPassword = "newPassword"
+        def oldPassword = passwordResetTokenService.findByToken(token).user.password
+
+        Map body = [
+                newPassword: newPassword
+        ]
+
+        when:
+        def response = restTemplate.exchange(path + 'password?token=' + token, HttpMethod.PUT, new HttpEntity(body), String.class)
+
+        then:
+        HttpStatus.NO_CONTENT == response.statusCode
+        oldPassword != newPassword // changed password
+        passwordResetTokenService.findByToken(token) == null // deleted password reset token
     }
 
     def "send reset password token successful"() {
@@ -82,24 +101,5 @@ class LoginUserControllerTest extends Specification {
         User user = userService.findByEmail(email)
         user.passwordResetToken != null //created password reset token
         oldToken != user.passwordResetToken
-    }
-
-    def "change password successful"() {
-        given:
-        def token = "token12345"
-        def newPassword = "newPassword"
-        def oldPassword = passwordResetTokenService.findByToken(token).user.password
-
-        Map body = [
-                newPassword: newPassword
-        ]
-
-        when:
-        def response = restTemplate.exchange(path + 'password?token=' + token, HttpMethod.PUT, new HttpEntity(body), String.class)
-
-        then:
-        HttpStatus.NO_CONTENT == response.statusCode
-        oldPassword != newPassword // changed password
-        passwordResetTokenService.findByToken(token) == null // deleted password reset token
     }
 }

@@ -17,7 +17,7 @@ import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.ANY)
 @ActiveProfiles(value = ["test"])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -43,25 +43,12 @@ class UserControllerTest extends Specification {
 
     def "get user by id"() {
         given:
-        def id = 1001
+        def id = 1000
         when:
         def response = restTemplate.getForEntity(path + id, User.class)
 
         then:
         HttpStatus.OK == response.statusCode
-    }
-
-    def "delete user by id"() {
-        given:
-        def id = 1000
-        when:
-        def response = restTemplate.exchange(path + id, HttpMethod.DELETE, null, String.class)
-
-        then:
-        HttpStatus.NO_CONTENT == response.statusCode
-
-        def task = userService.findById(id)
-        task == Optional.empty()
     }
 
     def "get posts"(){
@@ -91,5 +78,18 @@ class UserControllerTest extends Specification {
         def response = restTemplate.getForEntity(path + id + '/notifications', String.class)
         then:
         HttpStatus.OK == response.statusCode
+    }
+
+    def "delete user by id"() {
+        given:
+        def id = 1001
+        when:
+        def response = restTemplate.exchange(path + id, HttpMethod.DELETE, null, String.class)
+
+        then:
+        HttpStatus.NO_CONTENT == response.statusCode
+
+        def user = userService.findById(id)
+        user == Optional.empty()
     }
 }

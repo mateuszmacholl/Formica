@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service
 
 @Service
 class CommentConverter(val userService: UserService, val answerService: AnswerService) : DtoConverter<CreateCommentDto>() {
-    override fun toEntity(createCommentDto: CreateCommentDto): Comment {
-        val user = userService.findByUsername(createCommentDto.author) ?: throw IllegalArgumentException()
-        val answer = answerService.findById(createCommentDto.answer as Int)
+    override fun toEntity(from: CreateCommentDto): Comment {
+        val user = userService.findByUsername(from.author) ?: throw IllegalArgumentException()
+        val answer = answerService.findById(from.answer as Int)
         if(!answer.isPresent){
             throw IllegalArgumentException()
         }
         return Comment(
-                content = createCommentDto.content,
+                content = from.content,
                 answer = answer.get(),
                 author = user
         )

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserConverter: DtoConverter<CreateUserDto>() {
-   override fun toEntity(createUserDto: CreateUserDto) = User(
-            username = createUserDto.username,
-            email = createUserDto.email,
-            password = createUserDto.password
+   override fun toEntity(from: CreateUserDto) = User(
+            username = from.username,
+            email = from.email,
+            password = from.password
     )
 }

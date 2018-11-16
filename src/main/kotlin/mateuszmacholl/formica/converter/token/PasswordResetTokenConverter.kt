@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class PasswordResetTokenConverter(val userService: UserService) : DtoConverter<CreatePasswordResetTokenDto>() {
-    override fun toEntity(createPasswordResetTokenDto: CreatePasswordResetTokenDto): PasswordResetToken {
-        val user = userService.findByUsername(createPasswordResetTokenDto.user) ?: throw IllegalArgumentException()
-        return PasswordResetToken(token = createPasswordResetTokenDto.token, user = user)
+    override fun toEntity(from: CreatePasswordResetTokenDto): PasswordResetToken {
+        val user = userService.findByUsername(from.user) ?: throw IllegalArgumentException()
+        return PasswordResetToken(token = from.token, user = user)
     }
 }

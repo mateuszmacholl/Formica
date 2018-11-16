@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AnswerRepo : JpaRepository<Answer, Int>, JpaSpecificationExecutor<Answer> {
-}
+interface AnswerRepo : JpaRepository<Answer, Int>, JpaSpecificationExecutor<Answer>

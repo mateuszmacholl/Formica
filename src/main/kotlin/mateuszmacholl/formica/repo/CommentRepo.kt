@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CommentRepo : JpaRepository<Comment, Int>, JpaSpecificationExecutor<Comment> {
-}
+interface CommentRepo : JpaRepository<Comment, Int>, JpaSpecificationExecutor<Comment>
