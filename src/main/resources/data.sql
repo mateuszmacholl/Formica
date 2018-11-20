@@ -22,7 +22,7 @@ INSERT INTO tag(id, name) VALUES (1003, 'java');
 insert into coordinates (id, latitude, longitude) values (1000, 10, 11);
 insert into coordinates (id, latitude, longitude) values (1001, 11, 10);
 insert into coordinates (id, latitude, longitude) values (1002, 11.01, 10.01);
-insert into coordinates (id, latitude, longitude) values (1003, 12.01, 10.01);
+insert into coordinates (id, latitude, longitude) values (1003, 54.6, 18.2514);
 insert into coordinates (id, latitude, longitude) values (1004, 11.01, 11.01);
 insert into coordinates (id, latitude, longitude) values (1005, 13.01, 10.01);
 insert into coordinates (id, latitude, longitude) values (1006, 1, 1);
@@ -35,13 +35,13 @@ insert into channel(id, name, coordinates_id) values (1003, 'Dworzec Gdynia', 10
 insert into channel(id, name, coordinates_id) values (1004, 'Dworzec Sopot', 1007);
 
 INSERT INTO post(id, creation_date, content, title, votes, author_id, coordinates_id)
- VALUES (1000,'2118-09-01 12:00:00', 'content1000', 'title1000', 1000, 1000, 1003);
+ VALUES (1000,'2018-11-20 12:00:00', 'content1000', 'title1000', 1000, 1000, 1003);
 INSERT INTO post(id, creation_date, content, title, votes , author_id, coordinates_id)
-VALUES (1001,'2118-09-01 12:00:00', 'content1001', 'title1001', 10, 1000, 1004);
+VALUES (1001,'2018-09-01 12:00:00', 'content1001', 'title1001', 10, 1000, 1004);
 INSERT INTO post(id, creation_date, content, title, votes, author_id, channel_id)
-VALUES (1002,'2118-09-01 12:00:00','content1002', 'title1002', 0, 1000, 1002);
+VALUES (1002,'2018-09-01 12:00:00','content1002', 'title1002', 0, 1000, 1002);
 INSERT INTO post(id, creation_date, content, title, votes, author_id, channel_id)
-VALUES (1003,'2118-09-01 12:00:00', 'content1003', 'title1003', 0, 1001, 1000);
+VALUES (1003,'2018-09-01 12:00:00', 'content1003', 'title1003', 0, 1001, 1000);
 
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1001);

@@ -47,12 +47,7 @@ constructor(@param:Qualifier("customUserDetailsService") private val userDetails
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/users/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers(HttpMethod.PUT, "/users/enabled").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/verification-token").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/password-reset-token").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/password").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 //.antMatchers("/**").permitAll()
                 .and()
