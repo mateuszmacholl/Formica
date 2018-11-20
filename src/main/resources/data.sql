@@ -37,11 +37,11 @@ insert into channel(id, name, coordinates_id) values (1004, 'Dworzec Sopot', 100
 INSERT INTO post(id, creation_date, content, title, votes, author_id, coordinates_id)
  VALUES (1000,'2018-11-20 12:00:00', 'content1000', 'title1000', 1000, 1000, 1003);
 INSERT INTO post(id, creation_date, content, title, votes , author_id, coordinates_id)
-VALUES (1001,'2018-09-01 12:00:00', 'content1001', 'title1001', 10, 1000, 1004);
+VALUES (1001,'2018-11-01 12:00:00', 'content1001', 'title1001', 10, 1000, 1004);
 INSERT INTO post(id, creation_date, content, title, votes, author_id, channel_id)
-VALUES (1002,'2018-09-01 12:00:00','content1002', 'title1002', 0, 1000, 1002);
+VALUES (1002,'2018-10-01 12:00:00','content1002', 'title1002', 0, 1000, 1002);
 INSERT INTO post(id, creation_date, content, title, votes, author_id, channel_id)
-VALUES (1003,'2018-09-01 12:00:00', 'content1003', 'title1003', 0, 1001, 1000);
+VALUES (1003,'2017-03-01 12:00:00', 'content1003', 'title1003', 0, 1001, 1000);
 
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1000);
 INSERT INTO post_tag(post_id, tag_id) VALUES (1000,1001);
