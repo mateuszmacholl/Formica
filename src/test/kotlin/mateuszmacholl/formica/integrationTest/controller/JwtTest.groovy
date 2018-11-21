@@ -72,6 +72,7 @@ class JwtTest extends Specification {
         HttpStatus.NO_CONTENT == response.statusCode
     }
 
+    /* security is disabled
     def "get forbidden status code for secured endpoint when without token"(){
         given:
         def userId = 1000
@@ -81,4 +82,5 @@ class JwtTest extends Specification {
         then:
         HttpStatus.FORBIDDEN == response.statusCode
     }
+    */
 }

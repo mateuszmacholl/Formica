@@ -19,14 +19,14 @@ INSERT INTO tag(id, name) VALUES (1001, 'books');
 INSERT INTO tag(id, name) VALUES (1002, 'cars');
 INSERT INTO tag(id, name) VALUES (1003, 'java');
 
-insert into coordinates (id, latitude, longitude) values (1000, 10, 11);
-insert into coordinates (id, latitude, longitude) values (1001, 11, 10);
-insert into coordinates (id, latitude, longitude) values (1002, 11.01, 10.01);
-insert into coordinates (id, latitude, longitude) values (1003, 54.6, 18.2514);
-insert into coordinates (id, latitude, longitude) values (1004, 11.01, 11.01);
-insert into coordinates (id, latitude, longitude) values (1005, 13.01, 10.01);
-insert into coordinates (id, latitude, longitude) values (1006, 1, 1);
-insert into coordinates (id, latitude, longitude) values (1007, 1.005, 1);
+insert into coordinates (id, latitude, longitude) values (1000, 54.63, 18.2514);
+insert into coordinates (id, latitude, longitude) values (1001, 54.62, 18.255);
+insert into coordinates (id, latitude, longitude) values (1002, 54.61, 18.25);
+insert into coordinates (id, latitude, longitude) values (1003, 54.6, 18.2504);
+insert into coordinates (id, latitude, longitude) values (1004, 54.6, 18.26);
+insert into coordinates (id, latitude, longitude) values (1005, 54.6, 18.2511);
+insert into coordinates (id, latitude, longitude) values (1006, 54.6, 18.251);
+insert into coordinates (id, latitude, longitude) values (1007, 54.605, 18.25);
 
 insert into channel(id, name, coordinates_id) values (1000, 'Gdansk', 1000);
 insert into channel(id, name, coordinates_id) values (1001, 'Pomnik Neptuna', 1001);

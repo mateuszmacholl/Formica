@@ -37,8 +37,8 @@ class ChannelControllerTest extends Specification {
 
     def "get all near area"() {
         given:
-        def longitude = 1
-        def latitude = 1
+        def longitude = 18.2504
+        def latitude = 54.61
         def range = 1000
 
         when:
@@ -46,7 +46,6 @@ class ChannelControllerTest extends Specification {
 
         then:
         HttpStatus.OK == response.statusCode
-        response.body.length == 2
     }
 
     def "get channel by id"() {

@@ -5,6 +5,7 @@ import mateuszmacholl.formica.dto.answer.UpdateContentAnswerDto
 import mateuszmacholl.formica.dto.post.CreatePostDto
 import mateuszmacholl.formica.dto.post.UpdateTagsPostDto
 import mateuszmacholl.formica.dto.post.UpdateTitlePostDto
+import mateuszmacholl.formica.model.coordinates.Coordinates
 import mateuszmacholl.formica.service.post.PostService
 import mateuszmacholl.formica.specification.PostSpec
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,6 +29,15 @@ class PostController {
     fun getAllBy(postSpec: PostSpec, pageable: Pageable): ResponseEntity<*> {
         val posts = postService.findAll(postSpec, pageable)
         return ResponseEntity(posts, HttpStatus.OK)
+    }
+
+    @RequestMapping(value = ["/near-area"], method = [RequestMethod.GET])
+    fun getAllNearArea(@RequestParam(value = "longitude") longitude: Float,
+                       @RequestParam(value = "latitude") latitude: Float,
+                       @RequestParam(value = "range") range: Int): ResponseEntity<*> {
+        val coordinates = Coordinates(latitude = latitude, longitude =  longitude)
+        val channels = postService.findNearArea(coordinates, range)
+        return ResponseEntity(channels, HttpStatus.OK)
     }
 
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])

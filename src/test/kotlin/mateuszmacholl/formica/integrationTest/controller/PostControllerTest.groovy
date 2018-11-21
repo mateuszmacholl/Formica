@@ -35,6 +35,19 @@ class PostControllerTest extends Specification {
         HttpStatus.OK == response.statusCode
     }
 
+    def "get all near area"() {
+        given:
+        def longitude = 18.2504
+        def latitude = 54.61
+        def range = 1000
+
+        when:
+        def response = restTemplate.getForEntity(path + "/near-area?longitude=" + longitude + "&latitude=" + latitude + "&range=" + range, Post[].class)
+
+        then:
+        HttpStatus.OK == response.statusCode
+    }
+
     def "get post by id"() {
         given:
         def id = 1001

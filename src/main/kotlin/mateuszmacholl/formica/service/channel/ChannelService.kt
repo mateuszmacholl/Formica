@@ -36,6 +36,6 @@ class ChannelService constructor(
 
     fun findNearArea(coordinates: Coordinates, range: Int): List<Channel> {
         val channels = channelRepo.findAll()
-        return channels.filter { coordinatesCalculatorService.calcDistance(it.coordinates!!, coordinates) <= range }.toList()
+        return channels.filter { coordinatesCalculatorService.calcDistance(it.coordinates!!, coordinates) <= range }
     }
 }
