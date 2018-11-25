@@ -31,6 +31,7 @@
       - /{id} [GET] [DELETE]
           - /users [GET]
   - /posts [GET] [POST]
+      - near-area [GET]
       - /{id} [GET] [DELETE]
           - /answers [GET]
           - /tags [PATCH]
