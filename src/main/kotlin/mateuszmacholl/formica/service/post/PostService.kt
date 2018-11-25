@@ -30,7 +30,7 @@ constructor(private val postRepo: PostRepo,
     }
 
     fun findNearArea(coordinates: Coordinates, range: Int): List<Post> {
-        val posts = postRepo.findAll()
+        val posts = postRepo.findAllByOrderByCreationDateDesc()
         val postsNearArea = mutableListOf<Post>()
         posts.forEach {
             val postCoordinates: Coordinates = if(it.channel == null){

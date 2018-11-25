@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 @Repository
-interface PostRepo: JpaRepository<Post, Int>, JpaSpecificationExecutor<Post>
+interface PostRepo: JpaRepository<Post, Int>, JpaSpecificationExecutor<Post>{
+    fun findAllByOrderByCreationDateDesc(): List<Post>
+}
